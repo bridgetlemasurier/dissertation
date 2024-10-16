@@ -8,20 +8,22 @@ library(terra)
 
 #Elevation raster plots----
 
-el1 = raster("sdm_course/sections/basics/geo_data/srtm_59_12/srtm_59_12.tif")
+el1 = raster("basics/geo_data/srtm_59_12/srtm_59_12.tif")
 plot(el1)
 
 
-el2 = raster("sdm_course/sections/basics/geo_data/strm_60_11/srtm_60_11.tif")
+el2 = raster("basics/geo_data/strm_60_11/srtm_60_11.tif")
 plot(el2)
 
 
 # Mosaics of 2 plots ----
 par(mfrow = c(1,1))
+
 mosee = mosaic(el1, el2, fun = mean)
+
 plot(mosee)
 
-writeRaster(mosee, "join_59_60.tif")  # save to hard drive
+writeRaster(mosee, "basics/join_59_60.tif")  # save to hard drive
 
 # TOPOGRAPHIC PRODUCTS----
 # no joy at all - fix later if need be xx
@@ -32,11 +34,13 @@ mosee
 # want to convert lat-long rasters to planat units such as UTM
 # in meters
 
-#utm projection for north borneo
 #utm projection for north borneo 
-crs(mosee) <-  CRS("+proj=utm +zone=50 +ellps=GRS80 +datum=NAD83 +units=m +no_defs") 
+ref = "+proj=utm +zone=50 +ellps=GRS80 +datum=NAD83 +units=m +no_defs"
 
-projected_raster = projectRaster(mosee, crs = ref)
+# Convert your raster to a terra object
+mosee_terra <- rast(mosee)
+
+projected_raster = project(mosee_terra, ref_crs)
 
 projected_raster
 
