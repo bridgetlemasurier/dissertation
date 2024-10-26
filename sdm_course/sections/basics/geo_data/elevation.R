@@ -8,19 +8,12 @@ library(terra)
 
 #Elevation raster plots----
 
-<<<<<<< HEAD
 el1 = raster("sdm_course/sections/basics/geo_data/srtm_59_12/srtm_59_12.tif")
 plot(el1)
 
 
 el2 = raster("sdm_course/sections/basics/geo_data/strm_60_11/srtm_60_11.tif")
-=======
-el1 = raster("basics/geo_data/srtm_59_12/srtm_59_12.tif")
-plot(el1)
 
-
-el2 = raster("basics/geo_data/strm_60_11/srtm_60_11.tif")
->>>>>>> 8ed2c7c729c36732c98c6336b86efaa1d829af75
 plot(el2)
 
 
@@ -31,11 +24,8 @@ mosee = mosaic(el1, el2, fun = mean)
 
 plot(mosee)
 
-<<<<<<< HEAD
 writeRaster(mosee, "sdm_course/sections/basics/join_59_60.tif")  # save to hard drive
-=======
-writeRaster(mosee, "basics/join_59_60.tif")  # save to hard drive
->>>>>>> 8ed2c7c729c36732c98c6336b86efaa1d829af75
+
 
 # TOPOGRAPHIC PRODUCTS----
 # no joy at all - fix later if need be xx
@@ -52,21 +42,11 @@ ref = "+proj=utm +zone=50 +ellps=GRS80 +datum=NAD83 +units=m +no_defs"
 # Convert your raster to a terra object
 mosee_terra <- rast(mosee)
 
-<<<<<<< HEAD
-projected_raster = project(mosee_terra, ref)
-=======
 projected_raster = project(mosee_terra, ref_crs)
->>>>>>> 8ed2c7c729c36732c98c6336b86efaa1d829af75
+
 
 projected_raster
 
-
-<<<<<<< HEAD
-slp= terrain(projected_raster, v="slope", unit="radians", neighbors=8, filename="slp2.tif")
-
-plot(slp)
-=======
 slp=terrain(projected_raster, opt='slope', unit='radians', neighbors=8, filename='slp2.tif')
 
 plot(slp)
->>>>>>> 8ed2c7c729c36732c98c6336b86efaa1d829af75
