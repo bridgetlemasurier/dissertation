@@ -1,11 +1,19 @@
 ####################################################################
 ######### CRS of the raster data
 
+<<<<<<< HEAD
+=======
+setwd("sdm_course/sections")
+>>>>>>> 8ed2c7c729c36732c98c6336b86efaa1d829af75
 library(raster)
 library(terra)
 
 
+<<<<<<< HEAD
 j <- raster("sdm_course/sections/basics/join_59_60.tif")
+=======
+j <- raster("preprocessing/join_59_60.tif")
+>>>>>>> 8ed2c7c729c36732c98c6336b86efaa1d829af75
 
 plot(j)
 
@@ -21,8 +29,11 @@ projectedU = projectRaster(j, crs = ref) # this took years, but worked using ter
 projectedU
 
 
+<<<<<<< HEAD
 # converting from utm to lat-long ----
 
+=======
+>>>>>>> 8ed2c7c729c36732c98c6336b86efaa1d829af75
 s=raster("slp2.tif")
 
 plot(s)
