@@ -56,14 +56,11 @@ points(x = horn1$long,
 # Plot the first of the bioclim variables to check on cropping
 plot(msia.worldclim[[1]])
 
-
-
 ## Use the bioclim function, which takes your climate layers and the long and lat columns (in that order)
 # Convert SpatRaster to RasterLayer if needed
 msia.worldclim_stack <- raster::stack(msia.worldclim)  # Retains all layers  # Keep as SpatRaster if you need to use it with terra
 
 h.bc <- bioclim(msia.worldclim_stack, horn1[,c('long','lat')])
-graphics.off()
 
 # Adjust margins (if needed)
 par(mar = c(5, 4, 2, 2))  # Set margins (bottom, left, top, right)
@@ -76,3 +73,43 @@ response(horn.d)
 
 horn.d.pred <- predict(object = horn.d, msia.worldclim_stack)
 plot(horn.d.pred, main = 'sdm predictions using climate layers')
+# higher = greater chance of finding species based on climate
+
+#### evaluate model performance----
+
+#### background data (pseudo-absences) needed for this
+      # we don't know exactly where absences are
+      # so we must create matrix of pseudo absences
+
+#### evaluation determines if the model can differentiate bw the habitat & the background
+
+#species presence
+
+head(horn1)
+
+plot(msia.worldclim) #predictors
+
+# extract random points from predictor rastors
+
+backg <- randomPoints(msia.worldclim_stack, n=1000,ext=ext, extf = 1.25)
+#background/pseudo-absence data - random 
+# can generate ones based on ecology - later
+# only generated 681 points - why?
+
+e = evaluate(horn1, backg, horn.d, msia.worldclim)
+#presence, background, model, predictors 
+# 4 arguements which evaluate function needs
+
+e
+  #class          : ModelEvaluation 
+  #n presences    : 944 
+  #n absences     : 681 
+  #AUC            : 0.8510921  <- most important metric for eval
+  #cor            : 0.5007327 
+  #max TPR+TNR at : 0.06875593 
+
+plot(e, 'ROC')
+
+# AUC < 0.5 = shite - model is no better than guess
+# AUC = 0.85 means bioclim model does a good job of identifying the
+# climate envelope of the species
