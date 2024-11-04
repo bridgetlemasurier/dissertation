@@ -20,7 +20,7 @@ pa1$pb <- as.factor(pa1$pb) #1 stands for presence and 0 for absence
 head(pa)
 
 set.seed(1) #pseudo-repeatability
-trainIndex = createDataPartition(pa$pb, p = .75, 
+trainIndex = createDataPartition(pa1$pb, p = .75, 
                                  list = FALSE, 
                                  times = 1) #y as basis of splitting
 
