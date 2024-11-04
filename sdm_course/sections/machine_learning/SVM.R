@@ -1,7 +1,7 @@
 #######################################################################
 ############### SVM - support vector machines
 
-setwd("F:/SDM_in R/Data/1_Raster data/ready_rasters")
+setwd("sdm_course/sections/data/ready_rasters")
 library(caret)
 library(pROC)
 
@@ -17,15 +17,15 @@ summary(pa1)
 
 pa1$pb <- as.factor(pa1$pb) #1 stands for presence and 0 for absence
 
-head(pa)
+head(pa1)
 
 set.seed(1) #pseudo-repeatability
 trainIndex = createDataPartition(pa1$pb, p = .75, 
                                  list = FALSE, 
                                  times = 1) #y as basis of splitting
 
-training = pa[ trainIndex,] #75% data for model training
-testing= pa[-trainIndex,] #25% for model testing
+training = pa1[ trainIndex,] #75% data for model training
+testing= pa1[-trainIndex,] #25% for model testing
 
 head(training)
 

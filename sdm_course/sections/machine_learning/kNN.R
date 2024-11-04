@@ -3,7 +3,7 @@
 # commonly used classifciation algorithm
 # robust relusts - not usely SDM
 
-setwd("F:/SDM_in R/Data/1_Raster data/ready_rasters")
+setwd("sdm_course/sections/data/ready_rasters")
 library(caret)
 library(pROC)
 
