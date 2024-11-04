@@ -6,29 +6,34 @@
 library(caret)
 library(pROC)
 library(raster)
+library(terra)
+library(tidyverse)
 
 setwd("sdm_course/sections/data/ready_rasters")
 
 pa=read.csv("Pres_abs.csv")
 
+pa1 <- pa%>%
+  select(!(land))
+
+  
 # split data into test and train ----
 
-head(pa) #1 --> species occurence
+head(pa1) #1 --> species occurence
 set.seed(1) #pseudo-repeatability
-trainIndex = createDataPartition(pa$pb, p = .75, 
+trainIndex = createDataPartition(pa1$pb, p = .75, 
                                  list = FALSE, 
                                  times = 1) #y as basis of splitting
 
-training = pa[ trainIndex,] #75% data for model training
-testing= pa[-trainIndex,] #25% for model testing
+training = pa1[ trainIndex,] #75% data for model training
+testing= pa1[-trainIndex,] #25% for model testing
 
 
 # general model ----
-set.seed(825) # this wasn't explained...
 
 #y is pb
 pb=as.factor(training$pb) #1 stands for presence and 0 for absence
-land=as.factor(training$land) #land use categories are categorical
+pb
 
 m1 = glm(pb ~., data=training) #base package # ~. means include all predictors
 #class(m1)
@@ -36,8 +41,8 @@ summary(m1)
 # all factors statistically significant -> all have influence over presence
 
 
-## caret
-# define training control--> 10fold cv
+## caret ----
+# define training control--> 10fold cv - oppurtunity to train without testing
 train_control = trainControl(method="cv", number=10)
 
 mod_fit=train(pb~.,data=training,trControl=train_control,method="glm",family="binomial")
@@ -59,22 +64,18 @@ roc.glmModel = pROC::roc(testing[,"pb"], p1) #compare testing data
 #with predicted responses
 
 auc = pROC::auc(roc.glmModel)
-# Area under the curve: 0.8083 - GOOD!
+# Area under the curve: 0.7924 - GOOD!
 
-plot(roc.glmModel)
+plot(roc.glmModel) # further from line, better model
 text(0.5,0.5,paste("AUC = ",format(auc, digits=5, scientific=FALSE)))
 
-## build an SDM ----
+## build an SD map----
 
 ## read in all predictors-since they are all significant
 datafiles = Sys.glob("*.tif") #Or whatever identifies your files
 
 datafiles #list of predictors
-
-ext = extent(99, 105, 1.2, 6.7)
-
-stck = stack() #empty raster stack for storing raster layers
-
+stck = stack() # empty raster to store layers
 for(i in 1:NROW(datafiles)){
   tempraster = raster(datafiles[i])
   stck = stack(stck,tempraster)
@@ -89,19 +90,20 @@ plot(p1,main="GLM Predictive Map")
 p2 = predict(stck, m1) #use the basic GLM to predict 
 #implement the GLM model stored
 #in mod_fit on the raster stack of our predictors
-plot(p2,main="GLM Predictive Map")
+plot(p2,main="GLM Predictive Map") # less accurate scale but similar
 
-### remove land use as a predictor
-names(stck)
+### remove land use as a predictor - i already did this lol
+# keep because its good to know
+# names(stck)
 
-s=dropLayer(stck,3)
-names(s)
+# s=dropLayer(stck,3)
+# names(s)
 
 mod_fit2=train(pb~altitude+aspect1+preciptn+roughness1+slope+tempAvg+tempMin
                ,data=training,trControl=train_control,method="glm",family="binomial")
 #remove land use type
 summary(mod_fit2)
 
-p3 = predict(s, mod_fit2) #use predict to implement the GLM model stored
+p3 = predict(stck, mod_fit2) #use predict to implement the GLM model stored
 #in mod_fit on the raster stack of our predictors
 plot(p3,main="GLM Predictive Map")
