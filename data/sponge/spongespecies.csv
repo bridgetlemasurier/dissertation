@@ -1,98 +1,98 @@
-"Species","count"
-"Antho",2
-"Antho (Antho) dichotoma",13
-"Antho dichotoma",26
-"Anthoptilum grandiflorum",1
-"Aphrocallistes",41
-"Aphrocallistes beatrix",9
-"Aphrocallistes beatrix beatrix",1
-"Aphrocallistidae",1
-"Aplysilla",2
-"Asbestopluma",24
-"Asconema",2
-"Asconema foliatum",17
-"Axinella",26
-"Axinella infundibuliformis",82
-"Axinella polypoides",4
-"Axinella rugosa",16
-"Axinellida",227
-"Axinellidae",109
-"Chondrocladia",7
-"Chonelasma",3
-"Cladorhiza",4
-"Craniella",296
-"Craniella cranium",72
-"Craniella longipilis",2
-"Craniella polyura",140
-"Craniella zetlandica",19
-"Demospongiae",39
-"Dendroceratida",2
-"Euplectella",5
-"Geodia",195
-"Geodia atlantica",29
-"Geodia barretti",195
-"Geodia hentscheli",6
-"Geodia macandrewii",169
-"Geodia megastrella",5
-"Geodia parva",1
-"Geodia phlegraei",41
-"Geodiidae",2
-"Halichondrida",9
-"Haliclona",9
-"Haliclona urceolus",2
-"Haplosclerida",93
-"Hexactinellida",17
-"Hexadella",1
-"Hexadella dedritifera",1
-"Hyalonema",4
-"Hymedesmia",2
-"Ianthellidae",1
-"Mycale (mycale) lingua",7
-"Mycale (Mycale) lingua",212
-"Mycale lingua",7
-"Mycalidae",96
-"Pachastrellidae",11
-"Phakellia",58
-"Phakellia bowerbanki",2
-"Phakellia robusta",19
-"Phakellia ventilabrum",354
-"Pheronema",7
-"Pheronema carpenteri",45
-"Poecilosclerida",4
-"Polymastia",70
-"Polymastia andrica",31
-"Polymastia arctica",13
-"Polymastia grimaldii",504
-"Polymastia hemisphaerica",284
-"Polymastia nivea",14
-"Polymastia penicillus",15
-"Polymastia thielei",66
-"Polymastia uberrima",106
-"Polymastiida",11
-"Polymastiidae",171
-"Porifera",2313
-"Quasillina brevis",51
-"Radiella",5
-"Radiella hemisphaerica",5
-"Stelletta",17
-"Stelletta normani",4
-"Stelletta rhaphidiophora",29
-"Stelletta tuberosa",1
-"Stryphnus",4
-"Stryphnus fortis",40
-"Stryphnus ponderosus",23
-"Stylocordyla",1
-"Stylocordyla borealis",54
-"Suberites",27
-"Suberites ficus",7
-"Suberites pagurorum",174
-"Tentorium semisuberites",124
-"Tethya norvegica",50
-"Tethyidae",57
-"Tetilla",46
-"Thenea",406
-"Thenea levis",39
-"Thenea muricata",83
-"Thenea valdiviae",84
-"Theneidae",5
-"Umbellula huxleyi",1
+Species,count,morphotype,taxonomy
+Antho,2,NA,genus
+Antho (Antho) dichotoma,13,,
+Antho dichotoma,26,,
+Anthoptilum grandiflorum,1,,
+Aphrocallistes,41,,
+Aphrocallistes beatrix,9,,
+Aphrocallistes beatrix beatrix,1,,
+Aphrocallistidae,1,,
+Aplysilla,2,,
+Asbestopluma,24,,
+Asconema,2,,
+Asconema foliatum,17,,
+Axinella,26,,
+Axinella infundibuliformis,82,,
+Axinella polypoides,4,,
+Axinella rugosa,16,,
+Axinellida,227,,
+Axinellidae,109,,
+Chondrocladia,7,,
+Chonelasma,3,,
+Cladorhiza,4,,
+Craniella,296,,
+Craniella cranium,72,,
+Craniella longipilis,2,,
+Craniella polyura,140,,
+Craniella zetlandica,19,,
+Demospongiae,39,,
+Dendroceratida,2,,
+Euplectella,5,,
+Geodia,195,,
+Geodia atlantica,29,,
+Geodia barretti,195,,
+Geodia hentscheli,6,,
+Geodia macandrewii,169,,
+Geodia megastrella,5,,
+Geodia parva,1,,
+Geodia phlegraei,41,,
+Geodiidae,2,,
+Halichondrida,9,,
+Haliclona,9,,
+Haliclona urceolus,2,,
+Haplosclerida,93,,
+Hexactinellida,17,,
+Hexadella,1,,
+Hexadella dedritifera,1,,
+Hyalonema,4,,
+Hymedesmia,2,,
+Ianthellidae,1,,
+Mycale (mycale) lingua,7,,
+Mycale (Mycale) lingua,212,,
+Mycale lingua,7,,
+Mycalidae,96,,
+Pachastrellidae,11,,
+Phakellia,58,,
+Phakellia bowerbanki,2,,
+Phakellia robusta,19,,
+Phakellia ventilabrum,354,,
+Pheronema,7,,
+Pheronema carpenteri,45,,
+Poecilosclerida,4,,
+Polymastia,70,,
+Polymastia andrica,31,,
+Polymastia arctica,13,,
+Polymastia grimaldii,504,,
+Polymastia hemisphaerica,284,,
+Polymastia nivea,14,,
+Polymastia penicillus,15,,
+Polymastia thielei,66,,
+Polymastia uberrima,106,,
+Polymastiida,11,,
+Polymastiidae,171,,
+Porifera,2313,,
+Quasillina brevis,51,,
+Radiella,5,,
+Radiella hemisphaerica,5,,
+Stelletta,17,,
+Stelletta normani,4,,
+Stelletta rhaphidiophora,29,,
+Stelletta tuberosa,1,,
+Stryphnus,4,,
+Stryphnus fortis,40,,
+Stryphnus ponderosus,23,,
+Stylocordyla,1,,
+Stylocordyla borealis,54,,
+Suberites,27,,
+Suberites ficus,7,,
+Suberites pagurorum,174,,
+Tentorium semisuberites,124,,
+Tethya norvegica,50,,
+Tethyidae,57,,
+Tetilla,46,,
+Thenea,406,,
+Thenea levis,39,,
+Thenea muricata,83,,
+Thenea valdiviae,84,,
+Theneidae,5,,
+Umbellula huxleyi,1,,
