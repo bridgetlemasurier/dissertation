@@ -20,6 +20,9 @@ The data spans from 1894-2023
 
 The majority of the data is collected between 2000 and 2023
 
+### Distribution
+![alt text](sponge_map.png)
+
 ### Morphotype
 In the process of categorising morphotypes 
 
