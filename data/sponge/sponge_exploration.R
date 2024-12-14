@@ -62,4 +62,13 @@ spongemap
 # Save the map as a PNG file
 ggsave("sponge_map.png", plot = map, width = 10, height = 8, dpi = 300)
 
+trawlmap <- ggplot(data = world) +
+  geom_sf(fill = "lightgrey", color = "gray40", size = 0.3) +
+  geom_segment(data = tidysponges,
+               aes(x = StartLongitude, y = StartLatitude,
+                   xend = EndLongitude, yend = EndLatitude),
+               color = "red", alpha = 0.4, linewidth = 0.5)+
+  coord_sf(xlim = c(-75, 50), ylim = c(30, 85), expand = FALSE) +
+  theme_map() 
+trawlmap
 
