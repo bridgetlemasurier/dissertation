@@ -42,13 +42,21 @@ morphsponges <- tidysponges%>%
                                                "Geodia macandrewii", 
                                                "Geodia megastrella", 
                                                "Geodia parva", 
-                                               "Geodia phlegraei", 
+                                               "Geodia phlegraei",
+                                               "Mycale (mycale) lingua",
+                                               "Mycale (Mycale) lingua",
+                                               "Mycale lingua",
+                                               "Stelletta", 
+                                               "Stelletta normani", 
+                                               "Stelletta rhaphidiophora", 
+                                               "Stelletta tuberosa",
                                                "Stryphnus fortis", 
                                                "Stryphnus ponderosus", 
                                                "Suberites", 
                                                "Suberites ficus", 
                                                "Suberites pagurorum", 
                                                "Tethya norvegica", 
+                                               "Thenea",
                                                "Thenea levis", 
                                                "Thenea muricata", 
                                                "Thenea valdiviae") ~ "massive",
@@ -61,8 +69,10 @@ morphsponges <- tidysponges%>%
                                                "Polymastia penicillus",
                                                "Polymastia thielei",
                                                "Polymastia uberrima",
-                                               "Radiella hemisphaerica") ~ "papillate",
-                                Species %in% c("Quasillina brevis",
+                                               "Radiella hemisphaerica",
+                                               "Tentorium semisuberites") ~ "papillate",
+                                Species %in% c("Pheronema carpenteri",
+                                               "Quasillina brevis",
                                                "Stylocordyla borealis") ~ "stipulate"))%>%
   mutate(morphotype = as.factor(morphotype))
 
@@ -88,7 +98,7 @@ morphsponge_absences <- morphspongesNA%>%
 morphsponge_presences <- morphspongesNA%>%
   filter(Number > 0)
 
-morphmap <- ggplot(data = world) +
+morphmap2 <- ggplot(data = world) +
   geom_sf(fill = "lightgrey", color = "gray40", size = 0.3) +
   geom_point(data = morphsponge_presences, 
              aes(x = MiddleLongitude, y = MiddleLatitude, colour = morphotype),
@@ -96,4 +106,6 @@ morphmap <- ggplot(data = world) +
   coord_sf(xlim = c(-75, 50), ylim = c(40, 85), expand = FALSE) +
   theme_map()
 
-ggsave("morphmap.png", plot = morphmap, width = 10, height = 8, dpi = 300)
+ggsave("data/sponge/morphmap2.png", plot = morphmap2, width = 10, height = 8, dpi = 300)
+
+# remove years pre 2000 ----
