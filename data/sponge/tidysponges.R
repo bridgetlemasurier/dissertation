@@ -90,6 +90,12 @@ ggplot(data = world) +
   coord_sf(xlim = c(-75, 50), ylim = c(40, 85), expand = FALSE) +
   theme_map()
 
+# remove years pre 2000 ----
+morphspongesNA <- morphspongesNA%>%
+  mutate(ObsYear = as.numeric(str_extract(ObsDate, "\\d{4}")),
+         Decade = as.numeric(floor(ObsYear/ 10) * 10))%>%
+  filter(ObsYear >=  2000)
+
 
 # presence and absences ----
 morphsponge_absences <- morphspongesNA%>%
@@ -108,4 +114,5 @@ morphmap2 <- ggplot(data = world) +
 
 ggsave("data/sponge/morphmap2.png", plot = morphmap2, width = 10, height = 8, dpi = 300)
 
-# remove years pre 2000 ----
+
+
