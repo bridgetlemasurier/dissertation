@@ -27,7 +27,7 @@ Data in .nc files is the average value of:
 [tif_files.R] converts .nc files to GeoTIFF files - used in sdm course so familiar with this format
 
 ## Still to do
--[] need to decide on extent based on sponges
--[] clip rasters to this extent
+- [ ] need to decide on extent based on sponges
+- [ ] clip rasters to this extent
 
   Then I think (??) we're good to go - but definitely double check this...
