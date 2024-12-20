@@ -12,6 +12,8 @@ temp_nc_path <- "tempmean.nc"
 #read layer
 temp_nc <- rast(temp_nc_path)
 
+temp_nc
+
 plot(temp_nc)
 
 # Write as GeoTIFF
