@@ -109,10 +109,51 @@ morphmap2 <- ggplot(data = world) +
   geom_point(data = morphsponge_presences, 
              aes(x = MiddleLongitude, y = MiddleLatitude, colour = morphotype),
              alpha = 0.4, size = 2) +
-  coord_sf(xlim = c(-75, 50), ylim = c(40, 85), expand = FALSE) +
+  coord_sf(xlim = c(-60, 45), ylim = c(41, 83), expand = FALSE) +
+  theme_map()+
+  theme(legend.position = "bottom")
+
+morphmap2
+
+# ggsave("data/sponge/morphmap2.png", plot = morphmap2, width = 10, height = 8, dpi = 300)
+
+# presence/absence maps ----
+
+sponges <- morphspongesNA%>%
+  mutate(presence = if_else(Number == 0, "absent","present", missing = NA))
+
+ukpresence_map <- ggplot(data = world) +
+  geom_sf(fill = "lightgrey", color = "gray40", size = 0.3) +
+  geom_point(data = sponges, 
+             aes(x = MiddleLongitude, y = MiddleLatitude, colour = presence),
+             alpha = 0.4, size = 2) +
+  coord_sf(xlim = c(-20, 10), ylim = c(50, 63), expand = FALSE) +
   theme_map()
 
-ggsave("data/sponge/morphmap2.png", plot = morphmap2, width = 10, height = 8, dpi = 300)
+# 'GB': ('United Kingdom', (-7.57216793459, 49.959999905, 1.68153079591, 58.6350001085))
+
+ukpresence_map
 
 
+articpresence_map <- ggplot(data = world) +
+  geom_sf(fill = "lightgrey", color = "gray40", size = 0.3) +
+  geom_point(data = sponges, 
+             aes(x = MiddleLongitude, y = MiddleLatitude, colour = presence),
+             alpha = 0.4, size = 2) +
+  coord_sf(xlim = c(-5, 50), ylim = c(65, 85), expand = FALSE) +
+  theme_map()
 
+articpresence_map
+
+extpresence_map <- ggplot(data = world) +
+  geom_sf(fill = "lightgrey", color = "gray40", size = 0.3) +
+  geom_point(data = sponges, 
+             aes(x = MiddleLongitude, y = MiddleLatitude, colour = presence),
+             alpha = 0.4, size = 2) +
+  coord_sf(xlim = c(-60, 45), ylim = c(41, 83), expand = FALSE) +
+  theme_map() +
+  theme(legend.position = "bottom")
+extpresence_map
+
+# extent to clip rasters to is xlim = c(-60, 45), ylim = c(41, 83)
+#  at least for now, may change to look at specific area
