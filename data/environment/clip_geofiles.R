@@ -199,4 +199,12 @@ for(i in 1:NROW(bioracle_layers)){
 
 bioracle_stack
 
+# all same dims, res, ext and crs - dont need to change :)
+# class      : RasterStack 
+# dimensions : 760, 2020, 1535200, 16  (nrow, ncol, ncell, nlayers)
+# resolution : 0.05, 0.05  (x, y)
+# extent     : -60, 41, 45, 83  (xmin, xmax, ymin, ymax)
+# crs        : +proj=longlat +datum=WGS84 +no_defs 
+
 plot(bioracle_stack) # yay, need to change graph titles if presenting
+
