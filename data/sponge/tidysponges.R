@@ -104,6 +104,7 @@ morphsponge_absences <- morphspongesNA%>%
 morphsponge_presences <- morphspongesNA%>%
   filter(Number > 0)
 
+# map morphotype presences and trim extent
 morphmap2 <- ggplot(data = world) +
   geom_sf(fill = "lightgrey", color = "gray40", size = 0.3) +
   geom_point(data = morphsponge_presences, 
@@ -115,10 +116,11 @@ morphmap2 <- ggplot(data = world) +
 
 morphmap2
 
-# ggsave("data/sponge/morphmap2.png", plot = morphmap2, width = 10, height = 8, dpi = 300)
+ggsave("data/sponge/morphmap2.png", plot = morphmap2, width = 10, height = 8, dpi = 300)
 
 # presence/absence maps ----
 
+# roughly uk samples
 sponges <- morphspongesNA%>%
   mutate(presence = if_else(Number == 0, "absent","present", missing = NA))
 
@@ -134,7 +136,7 @@ ukpresence_map <- ggplot(data = world) +
 
 ukpresence_map
 
-
+# arctic circle samples
 articpresence_map <- ggplot(data = world) +
   geom_sf(fill = "lightgrey", color = "gray40", size = 0.3) +
   geom_point(data = sponges, 
@@ -145,6 +147,8 @@ articpresence_map <- ggplot(data = world) +
 
 articpresence_map
 
+# check chosen extent contains absences aswell
+
 extpresence_map <- ggplot(data = world) +
   geom_sf(fill = "lightgrey", color = "gray40", size = 0.3) +
   geom_point(data = sponges, 
@@ -153,7 +157,12 @@ extpresence_map <- ggplot(data = world) +
   coord_sf(xlim = c(-60, 45), ylim = c(41, 83), expand = FALSE) +
   theme_map() +
   theme(legend.position = "bottom")
+
 extpresence_map
+
+ggsave("data/sponge/presencemap.png",
+       plot = extpresence_map, width = 10, height = 8, dpi = 300)
+
 
 # extent to clip rasters to is xlim = c(-60, 45), ylim = c(41, 83)
 #  at least for now, may change to look at specific area
