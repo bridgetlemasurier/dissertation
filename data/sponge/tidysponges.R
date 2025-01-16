@@ -116,7 +116,7 @@ morphmap2 <- ggplot(data = world) +
 
 morphmap2
 
-ggsave("data/sponge/morphmap2.png", plot = morphmap2, width = 10, height = 8, dpi = 300)
+#ggsave("data/sponge/morphmap2.png", plot = morphmap2, width = 10, height = 8, dpi = 300)
 
 # presence/absence maps ----
 
@@ -160,9 +160,70 @@ extpresence_map <- ggplot(data = world) +
 
 extpresence_map
 
-ggsave("data/sponge/presencemap.png",
-       plot = extpresence_map, width = 10, height = 8, dpi = 300)
+# ggsave("data/sponge/presencemap.png",
+#       plot = extpresence_map, width = 10, height = 8, dpi = 300)
 
 
 # extent to clip rasters to is xlim = c(-60, 45), ylim = c(41, 83)
 #  at least for now, may change to look at specific area
+
+
+# playing with extents
+
+ggplot(data = world) +
+  geom_sf(fill = "lightgrey", color = "gray40", size = 0.3) +
+  geom_point(data = morphsponge_presences, 
+             aes(x = MiddleLongitude, y = MiddleLatitude, colour = morphotype),
+             alpha = 0.4, size = 2) +
+  coord_sf(xlim = c(-20, 10), ylim = c(50, 65), expand = FALSE) +
+  theme_map()+
+  theme(legend.position = "bottom")
+
+ggplot(data = world) +
+  geom_sf(fill = "lightgrey", color = "gray40", size = 0.3) +
+  geom_point(data = sponges, 
+             aes(x = MiddleLongitude, y = MiddleLatitude, colour = presence),
+             alpha = 0.4, size = 2) +
+  coord_sf(xlim = c(-20, 10), ylim = c(50, 65), expand = FALSE) +
+  theme_map() +
+  theme(legend.position = "bottom")
+
+# massive sponges
+massivesponges <- sponges%>%
+  filter(morphotype == "massive")
+
+par(mfrow = c(1, 2))
+
+ggplot(data = world) +
+  geom_sf(fill = "lightgrey", color = "gray40", size = 0.3) +
+  geom_point(data = massivesponges, 
+             aes(x = MiddleLongitude, y = MiddleLatitude, colour = morphotype),
+             alpha = 0.4, size = 2) +
+  coord_sf(xlim = c(-75, 50), ylim = c(40, 85), expand = FALSE) +
+  theme_map()+
+  theme(legend.position = "bottom")
+
+ggplot(data = world) +
+  geom_sf(fill = "lightgrey", color = "gray40", size = 0.3) +
+  geom_point(data = massivesponges, 
+             aes(x = MiddleLongitude, y = MiddleLatitude, colour = presence),
+             alpha = 0.4, size = 2) +
+  coord_sf(xlim = c(-75, 50), ylim = c(40, 85), expand = FALSE) +
+  theme_map() +
+  theme(legend.position = "bottom")
+
+
+## split by morph
+morph_facet <- ggplot(data = world) +
+  geom_sf(fill = "lightgrey", color = "gray40", size = 0.3) +
+  geom_point(data = sponges, 
+             aes(x = MiddleLongitude, y = MiddleLatitude, colour = morphotype,
+                 shape = presence),
+             alpha = 0.4, size = 2) +
+  coord_sf(xlim = c(-60, 45), ylim = c(41, 83), expand = FALSE) +
+  theme_map()+
+  facet_wrap(vars(morphotype)) +
+  theme(legend.position = "bottom")
+
+ggsave("data/sponge/morph_facet.png",
+       plot = morph_facet, width = 10, height = 8, dpi = 300)

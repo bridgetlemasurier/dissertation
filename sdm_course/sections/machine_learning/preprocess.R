@@ -6,7 +6,7 @@ setwd("sdm_course/sections/data/ready_rasters")
 
 pa=read.csv("Pres_abs.csv")
 
-#pa=na.omit(pa)
+pa <- na.omit(pa)
 
 head(pa)
 
