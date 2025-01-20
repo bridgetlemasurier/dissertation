@@ -124,6 +124,13 @@ morphmap2
 sponges <- morphspongesNA%>%
   mutate(presence = if_else(Number == 0, "absent","present", missing = NA))
 
+tidyishsponges <- sponges%>%
+  dplyr::select(status, HighestTaxonomicResolution, Species, Ship, SurveyMethod,
+                MiddleLatitude, MiddleLongitude, morphotype, ObsYear, Decade,
+                presence)
+
+write.csv(tidyishsponges, "data/sponge/tidyishsponge.csv")
+
 ukpresence_map <- ggplot(data = world) +
   geom_sf(fill = "lightgrey", color = "gray40", size = 0.3) +
   geom_point(data = sponges, 
