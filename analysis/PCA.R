@@ -99,3 +99,4 @@ fviz_pca(sponge_PCA, habillage = spongePCA_NA$morphotype, col.var = "black", lab
 # seems to be some clustering but not very distinct but will try again with a
 # more refined set of variables
 
+
