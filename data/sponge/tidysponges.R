@@ -121,9 +121,6 @@ morphmap2
 # presence/absence maps ----
 
 # roughly uk samples
-sponges <- morphspongesNA%>%
-  mutate(presence = if_else(Number == 0, "absent","present", missing = NA))
-
 tidyishsponges <- sponges%>%
   dplyr::select(status, HighestTaxonomicResolution, Species, Ship, SurveyMethod,
                 MiddleLatitude, MiddleLongitude, morphotype, ObsYear, Decade,
