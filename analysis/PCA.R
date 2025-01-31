@@ -38,7 +38,7 @@ sponge_pres <- tidyishsponge%>%
   filter(presence == "present")
 
 # we also dont need extra info - just morph, lat and long
-sponge_occs <- sponge_pres%>%
+sponge_occs <- tidyishsponge%>%
   mutate(lat = MiddleLatitude, long = MiddleLongitude)%>%
   dplyr::select(long, lat)  # needs to be long then lat
 
@@ -52,7 +52,7 @@ sponge_info <- extract(bioracle_stack, sponge_occs)  # extract info for
                                                      # each point 
 
 # put in data frame of all info for each record
-sponge_infodf = data.frame(cbind(sponge_pres, sponge_info))
+sponge_infodf = data.frame(cbind(tidyishsponge, sponge_info))
 
 sponge_infodf <-sponge_infodf%>%
   mutate(status = as.factor(status),
@@ -82,6 +82,8 @@ sponge_infodf <- sponge_infodf%>%
 
 summary(sponge_infodf)
 
+summary(sponge_infodf$morphotype)
+
 # PCA time ----
 spongePCA_NA <- sponge_infodf%>%
   na.omit(TRUE)
@@ -91,6 +93,18 @@ sponge_PCA <- dudi.pca(spongePCA_NA[,c(13:28)],
                        scannf = FALSE,
                        nf = 2)
 fviz_pca(sponge_PCA, habillage = spongePCA_NA$morphotype, col.var = "black", label = "var")+
+  scale_color_manual(values = c("arborescent" = "#E84A5F", 
+                                "caliculate" = "#C4A700", 
+                                "flabellate" = "#00BFC4", 
+                                "massive" = "#00B936",
+                                "papillate" = "#F563E4",
+                                "stipulate" = "#4A90E2")) + # Custom colors for morphotypes
+  scale_shape_manual(values = c("arborescent" = 16, 
+                                "caliculate" = 16, 
+                                "flabellate" = 16, 
+                                "massive" = 16,
+                                "papillate" = 16,
+                                "stipulate" = 16)) +
   labs(title = "") +
   theme_minimal() +
   theme(panel.grid = element_blank())
