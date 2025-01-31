@@ -29,15 +29,21 @@ plot(bioracle_stack)
 
 # reset wd here to project directory
 
+# add substrate to stack ----
+# load in raster 
+folk5_1M <- raster("data/environment/substrate/qgis_rasters/5folk_1M.tif")
+plot(folk5_1M)
+
+predictor_stack <- addLayer(bioracle_stack, folk5_1M)
+
+summary(predictor_stack)
+plot(predictor_stack,17)
+
 # sponges ----
-# for now lets just do presences for the sake of maxentness
+# import tidyish sponges
 tidyishsponge <- read.csv("data/sponge/tidyishsponge.csv")
 
-# we just want presences for now 
-sponge_pres <- tidyishsponge%>%
-  filter(presence == "present")
-
-# we also dont need extra info - just morph, lat and long
+#dont need extra info - just lat and long for occurences
 sponge_occs <- tidyishsponge%>%
   mutate(lat = MiddleLatitude, long = MiddleLongitude)%>%
   dplyr::select(long, lat)  # needs to be long then lat
@@ -48,11 +54,12 @@ plot(bioracle_stack,16)
 points(sponge_occs, col = "blue")
 
 # extract data at each point of presenence ----
-sponge_info <- extract(bioracle_stack, sponge_occs)  # extract info for
+sponge_info <- extract(predictor_stack, sponge_occs)  # extract info for
                                                      # each point 
 
 # put in data frame of all info for each record
 sponge_infodf = data.frame(cbind(tidyishsponge, sponge_info))
+
 
 sponge_infodf <-sponge_infodf%>%
   mutate(status = as.factor(status),
@@ -61,9 +68,10 @@ sponge_infodf <-sponge_infodf%>%
          Ship = as.factor(Ship),
          SurveyMethod = as.factor(SurveyMethod),
          morphotype = as.factor(morphotype),
-         presence = as.factor(presence))
+         X5folk_1M = as.factor(X5folk_1M))
 
 summary(sponge_infodf)
+
 # renaming vars to easier names
 sponge_infodf <- sponge_infodf%>%
   rename(latitude = "MiddleLatitude",
@@ -78,27 +86,30 @@ sponge_infodf <- sponge_infodf%>%
     primaryprod = "phyc_mean",
     salinity = "so_mean",
     silicate = "si_mean",
-    temperature = "thetao_mean")
+    temperature = "thetao_mean",
+    substrate = "X5folk_1M")
 
 summary(sponge_infodf)
 
 summary(sponge_infodf$morphotype)
 
 # PCA time ----
+# need to filter NAs for PCA
 spongePCA_NA <- sponge_infodf%>%
   na.omit(TRUE)
-sponge_PCA <- dudi.pca(spongePCA_NA[,c(13:28)],
+
+sponge_PCA <- dudi.pca(spongePCA_NA[,c(12:27)],  # cant do factors so no substrate
                        center = TRUE,
                        scale = TRUE,
                        scannf = FALSE,
                        nf = 2)
-fviz_pca(sponge_PCA, habillage = spongePCA_NA$morphotype, col.var = "black", label = "var")+
-  scale_color_manual(values = c("arborescent" = "#E84A5F", 
-                                "caliculate" = "#C4A700", 
-                                "flabellate" = "#00BFC4", 
-                                "massive" = "#00B936",
-                                "papillate" = "#F563E4",
-                                "stipulate" = "#4A90E2")) + # Custom colors for morphotypes
+sponge_biplot <- fviz_pca(sponge_PCA, habillage = spongePCA_NA$morphotype, col.var = "black", label = "var")+
+  scale_color_manual(values = c("arborescent" = "#f9776e", 
+                                "caliculate" = "#b8a001", 
+                                "flabellate" = "#01c0c5", 
+                                "massive" = "#01bb39",
+                                "papillate" = "#f66ae4",
+                                "stipulate" = "#66a0ff")) + # Custom colors for morphotypes
   scale_shape_manual(values = c("arborescent" = 16, 
                                 "caliculate" = 16, 
                                 "flabellate" = 16, 
@@ -109,6 +120,10 @@ fviz_pca(sponge_PCA, habillage = spongePCA_NA$morphotype, col.var = "black", lab
   theme_minimal() +
   theme(panel.grid = element_blank())
 
+sponge_biplot
+
+ggsave("analysis/spongePCA2.png",
+       plot = sponge_biplot, width = 10, height = 8, dpi = 300)
 # ok slay that will do 
 # seems to be some clustering but not very distinct but will try again with a
 # more refined set of variables
