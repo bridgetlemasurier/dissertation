@@ -101,6 +101,15 @@ tidyishsponges <- sponges%>%
   dplyr::select(status, HighestTaxonomicResolution, Species, CruiseID, Ship, SurveyMethod,
                 MiddleLatitude, MiddleLongitude, morphotype, ObsYear, Decade)
 # selected variables needed for analyses
+# create factors
+tidyishsponge <- tidyishsponge%>%
+  mutate(status = as.factor(status),
+         HighestTaxonomicResolution = as.factor(HighestTaxonomicResolution),
+         Species = as.factor(Species),
+         Ship = as.factor(Ship),
+         CruiseID = as.factor(CruiseID),
+         SurveyMethod = as.factor(SurveyMethod),
+         morphotype = as.factor(morphotype))
 
 write.csv(tidyishsponges, "data/sponge/tidyishsponge.csv")
 
