@@ -66,6 +66,7 @@ sponge_infodf <-sponge_infodf%>%
          HighestTaxonomicResolution = as.factor(HighestTaxonomicResolution),
          Species = as.factor(Species),
          Ship = as.factor(Ship),
+         CruiseID = as.factor(CruiseID),
          SurveyMethod = as.factor(SurveyMethod),
          morphotype = as.factor(morphotype),
          X5folk_1M = as.factor(X5folk_1M))
@@ -93,17 +94,36 @@ summary(sponge_infodf)
 
 summary(sponge_infodf$morphotype)
 
+write.csv(sponge_infodf, "data/sponge_envinfo.csv")
+
 # PCA time ----
 # need to filter NAs for PCA
-spongePCA_NA <- sponge_infodf%>%
+spongePCA_data <- sponge_infodf%>%
+  dplyr::select(morphotype,
+                topographic_position_index,
+                terrain_ruggedness_index,
+                aspect,
+                bathymetry_mean,
+                current_direction,
+                current_velocity,
+                dissolvedO2,
+                iron,
+                nitrate,
+                pH,
+                phosphate,
+                primaryprod,
+                salinity,
+                silicate,
+                slope,
+                temperature)%>%
   na.omit(TRUE)
 
-sponge_PCA <- dudi.pca(spongePCA_NA[,c(12:27)],  # cant do factors so no substrate
+sponge_PCA <- dudi.pca(spongePCA_data[,c(2:17)],  # cant do factors so no substrate
                        center = TRUE,
                        scale = TRUE,
                        scannf = FALSE,
                        nf = 2)
-sponge_biplot <- fviz_pca(sponge_PCA, habillage = spongePCA_NA$morphotype, col.var = "black", label = "var")+
+sponge_biplot <- fviz_pca(sponge_PCA, habillage = spongePCA_data$morphotype, col.var = "black", label = "var")+
   scale_color_manual(values = c("arborescent" = "#f9776e", 
                                 "caliculate" = "#b8a001", 
                                 "flabellate" = "#01c0c5", 
@@ -127,5 +147,32 @@ ggsave("analysis/spongePCA2.png",
 # ok slay that will do 
 # seems to be some clustering but not very distinct but will try again with a
 # more refined set of variables
+
+# without massive sponges ----
+nomassive_PCA_data <- spongePCA_data%>%
+  filter(morphotype != "massive")
+summary(nomassive_PCA_data$morphotype)
+
+nomassive_PCA <- dudi.pca(nomassive_PCA_data[,c(2:17)],  # cant do factors so no substrate
+                       center = TRUE,
+                       scale = TRUE,
+                       scannf = FALSE,
+                       nf = 2)
+nomassive_biplot <- fviz_pca(nomassive_PCA, habillage = nomassive_PCA_data$morphotype, col.var = "black", label = "var")+
+  scale_color_manual(values = c("arborescent" = "#f9776e", 
+                                "caliculate" = "#b8a001", 
+                                "flabellate" = "#01c0c5",
+                                "papillate" = "#f66ae4",
+                                "stipulate" = "#66a0ff")) + # Custom colors for morphotypes
+  scale_shape_manual(values = c("arborescent" = 16, 
+                                "caliculate" = 16, 
+                                "flabellate" = 16,
+                                "papillate" = 16,
+                                "stipulate" = 16)) +
+  labs(title = "") +
+  theme_minimal() +
+  theme(panel.grid = element_blank())
+
+nomassive_biplot
 
 

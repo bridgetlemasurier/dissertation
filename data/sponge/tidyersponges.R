@@ -98,7 +98,7 @@ sponges <- sponges %>%
 
 # write new csv ----
 tidyishsponges <- sponges%>%
-  dplyr::select(status, HighestTaxonomicResolution, Species, Ship, SurveyMethod,
+  dplyr::select(status, HighestTaxonomicResolution, Species, CruiseID, Ship, SurveyMethod,
                 MiddleLatitude, MiddleLongitude, morphotype, ObsYear, Decade)
 # selected variables needed for analyses
 
