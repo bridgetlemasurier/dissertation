@@ -176,3 +176,42 @@ nomassive_biplot <- fviz_pca(nomassive_PCA, habillage = nomassive_PCA_data$morph
 nomassive_biplot
 
 
+# trying with new stack -----
+# 18/2/25
+
+# import predictors
+env_vars <- rast("data/environment/NAtl_rasters/present_env_vars.tif")
+
+# import tidyish sponges
+tidyishsponge <- read.csv("data/sponge/tidyishsponge.csv")
+
+#dont need extra info - just lat and long for occurences
+sponge_occs <- tidyishsponge%>%
+  mutate(lat = MiddleLatitude, long = MiddleLongitude)%>%
+  dplyr::select(long, lat)  # needs to be long then lat
+
+plot(env_vars,1)
+points(sponge_occs, col = "red")
+
+reduced_sponge_info <- extract(env_vars, sponge_occs)  # extract info for
+# each point 
+
+# put in data frame of all info for each record
+reduced_sponge_infodf = data.frame(cbind(tidyishsponge, reduced_sponge_info))
+
+class(reduced_sponge_infodf$cover)
+
+
+reduced_sponge_infodf <-reduced_sponge_infodf%>%
+  mutate(status = as.factor(status),
+         HighestTaxonomicResolution = as.factor(HighestTaxonomicResolution),
+         Species = as.factor(Species),
+         Ship = as.factor(Ship),
+         CruiseID = as.factor(CruiseID),
+         SurveyMethod = as.factor(SurveyMethod),
+         morphotype = as.factor(morphotype))
+
+summary(reduced_sponge_infodf)
+
+write.csv(reduced_sponge_infodf, "data/environment/NAtl_rasters/red_spongeinfo.csv")
+
