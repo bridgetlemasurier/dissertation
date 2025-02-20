@@ -113,7 +113,7 @@ plot(SSP5_massive_prediction, main = "2040-2050 SSP5 predicted suitability")
 
 
 ###################################################################################
-### ECOPAs
+### ECOPAs ---------------------------------------------------------------------
 
 # quick env data tidy
 env_vars_raster <- raster::stack(env_vars)  # needs to be raster stack for maxent

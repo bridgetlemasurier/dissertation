@@ -1,4 +1,4 @@
-# pseudo absences using ecoPA
+# massive pseudo absences using ecoPA
 
 #library
 library(tidyverse)
@@ -98,21 +98,21 @@ write.csv(massive_pa_xy, "data/pseudoabsences/ecoPA_massivepas.csv")
 ########## 3) Saving outputs ##########
 ### Rounded presences
 
-massive_rounded_pres = massive_niche[[3]]
-colnames(massive_rounded_pres) = massive_niche[[2]]
+#massive_rounded_pres = massive_niche[[3]]
+#colnames(massive_rounded_pres) = massive_niche[[2]]
 
-write.csv(massive_rounded_pres,
+#write.csv(massive_rounded_pres,
           "Rounded_presences_massive.csv",
           row.names = F)
 
 ### Pseudo-absences
 
-for (i in 1:length(massivePAs)){
+#for (i in 1:length(massivePAs)){
   
-  pseudo_abs_step = massivePAs[[i]]
+#  pseudo_abs_step = massivePAs[[i]]
   
-  write.csv(pseudo_abs_step,
-            paste0("PA_", names(massivePAs)[i], ".csv"),
-            row.names = F)
-}
+#  write.csv(pseudo_abs_step,
+#            paste0("PA_", names(massivePAs)[i], ".csv"),
+#            row.names = F)
+#}
 
