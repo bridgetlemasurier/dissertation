@@ -116,6 +116,15 @@ write.csv(tidyishsponges, "data/sponge/tidyishsponge.csv")
 # map morphotypes ----
 world <- ne_countries(scale = "medium", returnclass = "sf")
 
+presence_map <- ggplot(data = world) +
+  geom_sf(fill = "lightgrey", color = "gray40", size = 0.3) +
+  geom_point(data = sponges, 
+             aes(x = MiddleLongitude, y = MiddleLatitude),
+             colour = "4292cb", alpha = 0.4, size = 2) +
+  coord_sf(xlim = c(-60, 45), ylim = c(41, 83), expand = FALSE) +
+  theme_map()
+ggsave("data/sponge/presence_map.png", presence_map, width = 10, height = 8, dpi = 300)
+
 ggplot(data = world) +
   geom_sf(fill = "lightgrey", color = "gray40", size = 0.3) +
   geom_point(data = sponges, 
