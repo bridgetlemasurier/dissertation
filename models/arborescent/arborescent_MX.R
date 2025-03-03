@@ -123,13 +123,13 @@ ecopa_test = arborescent_pas[group == 1, ]
 ecoPA_arborescent_eval = evaluate(presence_test, ecopa_test, arborescent_MX, env_vars_raster)
 ecoPA_arborescent_eval
 
-#ecoPA_arborescent_eval
-#class          : ModelEvaluation 
-#n presences    : 22 
-#n absences     : 2000 
-#AUC            : 0.6590682 
-#cor            : 0.05523935 
-#max TPR+TNR at : 0.7958153 
+#ecoPA_arborescent_eval with correct niche
+# class          : ModelEvaluation 
+# n presences    : 22 
+# n absences     : 2000 
+# AUC            : 0.4693182 
+# cor            : -0.004034687 
+# max TPR+TNR at : 0.2225156 
 
 
 plot(ecoPA_arborescent_eval, 'ROC') # not great but potentially more realistic

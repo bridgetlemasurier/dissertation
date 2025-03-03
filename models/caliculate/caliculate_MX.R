@@ -123,13 +123,13 @@ ecopa_test = caliculate_pas[group == 1, ]
 ecoPA_caliculate_eval = evaluate(presence_test, ecopa_test, caliculate_MX, env_vars_raster)
 ecoPA_caliculate_eval
 
-#ecoPA_caliculate_eval
-#class          : ModelEvaluation 
-#n presences    : 16 
-#n absences     : 2000 
-#AUC            : 0.9402812 
-#cor            : 0.8583675 
-#max TPR+TNR at : 0.2816299  
+#ecoPA_caliculate_eval qith correct niche def
+# class          : ModelEvaluation 
+# n presences    : 16 
+# n absences     : 2000 
+# AUC            : 0.93875 
+# cor            : 0.4882935 
+# max TPR+TNR at : 0.6978333 
 
 
 plot(ecoPA_caliculate_eval, 'ROC') # not great but potentially more realistic

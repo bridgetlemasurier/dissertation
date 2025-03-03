@@ -130,6 +130,15 @@ ecoPA_papillate_eval
 #cor            : 0.640612 
 #max TPR+TNR at : 0.4698666 
 
+#correct defined niche
+#ecoPA_papillate_eval
+#class          : ModelEvaluation 
+#n presences    : 246 
+#n absences     : 2000 
+#AUC            : 0.9541463 
+#cor            : 0.6527866 
+#max TPR+TNR at : 0.4388237 
+
 response(papillate_MX)
 
 plot(ecoPA_papillate_eval, 'ROC')

@@ -27,26 +27,26 @@ arborescent <- sponge_info%>%
                 "si_mean",                   
                 "thetao_mean")
 
-
+summary(arborescent)
 # define niche space
 
 arborescent_niche = SpeciesNiche(data = arborescent,
                                bins_sizes = c(10, # TRI dimension will be represented with bins of size 10
-                                              0.1, # current v dimension will be represented with bins of size 0.1
+                                              0.01, # current v dimension will be represented with bins of size 0.1
                                               10, # O2 dimension will be represented with bins of size 1
-                                              10, # Si dimension will be represented with bins of size 1
-                                              2), # temp dimension will be represented with bins of size 1
-                               niche_border = c(0, 1265, # TRI dimension goes from 0 to 1265
-                                                0, 1.30, # Current V dimension goes from 1.049610e-06 to 1.290776 m/s
-                                                0, 409, # O2 dimension goes from 0.229 to 409 
-                                                1, 300, # Si dimension goes from 1.37, 300
-                                                -2, 20))  # temp dimension goes from -2 to 20 coverage
+                                              1, # Si dimension will be represented with bins of size 1
+                                              1), # temp dimension will be represented with bins of size 1
+                               niche_border = c(2, 350, # TRI dimension goes from 0 to 1265
+                                                0, 0.4, # Current V dimension goes from 1.049610e-06 to 1.290776 m/s
+                                                180, 270, # O2 dimension goes from 0.229 to 409 
+                                                5, 14, # Si dimension goes from 1.37, 300
+                                                4, 11))  # temp dimension goes from -2 to 20 coverage
 
 # generate PAs in niche space
 
 arborescentPAs <- PAGeneration(data = arborescent_niche,
                              nb_pa = 10000,
-                             ratio_pa_in = c(1, 2/3, 1/2))
+                             ratio_pa_in = 0)
 
 ## assigning location
 
@@ -95,24 +95,4 @@ points(arborescent_occs, col = "yellow")
 
 write.csv(arborescent_pa_xy, "data/pseudoabsences/ecoPA_arborescent_pas.csv")
 
-########## 3) Saving outputs ##########
-### Rounded presences
-
-#massive_rounded_pres = massive_niche[[3]]
-#colnames(massive_rounded_pres) = massive_niche[[2]]
-
-#write.csv(massive_rounded_pres,
-#"Rounded_presences_massive.csv",
-#row.names = F)
-
-### Pseudo-absences
-
-#for (i in 1:length(massivePAs)){
-
-#  pseudo_abs_step = massivePAs[[i]]
-
-#  write.csv(pseudo_abs_step,
-#            paste0("PA_", names(massivePAs)[i], ".csv"),
-#            row.names = F)
-#}
 

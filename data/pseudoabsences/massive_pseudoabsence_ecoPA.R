@@ -26,6 +26,9 @@ massive <- sponge_info%>%
                 "si_mean",                   
                 "thetao_mean")
 
+massive_niche_borders <- massive%>%
+  summary()
+
 
 # define niche space
 
@@ -33,19 +36,19 @@ massive_niche = SpeciesNiche(data = massive,
                      bins_sizes = c(10, # TRI dimension will be represented with bins of size 1
                                     0.1, # current v dimension will be represented with bins of size 0.01
                                     10, # O2 dimension will be represented with bins of size 1
-                                    10, # Si dimension will be represented with bins of size 1
-                                    2), # temp dimension will be represented with bins of size 1
-                     niche_border = c(0, 1265, # TRI dimension goes from 0 to 1265
-                                      0, 1.30, # Current V dimension goes from 1.049610e-06 to 1.290776 m/s
-                                      0, 409, # O2 dimension goes from 0.229 to 409 
-                                      1, 300, # Si dimension goes from 1.37, 300
-                                      -2, 20))  # temp dimension goes from -2 to 20 coverage
+                                    1, # Si dimension will be represented with bins of size 1
+                                    1), # temp dimension will be represented with bins of size 1
+                     niche_border = c(0, 590, # TRI dimension goes from 0 to 590
+                                      0, 0.4, # Current V dimension goes from 0 to 0.4 m/s
+                                      180, 340, # O2 dimension goes from 180 to 340
+                                      3, 18, # Si dimension goes from 1.37, 300
+                                      -1, 15))  # temp dimension goes from -1 to 15
 
 # generate PAs in niche space
 
 massivePAs <- PAGeneration(data = massive_niche,
              nb_pa = 10000,
-             ratio_pa_in = c(1, 2/3, 1/2))
+             ratio_pa_in = c(1/2, 1/3, 0))
 
 ## assigning location
 
@@ -54,14 +57,13 @@ env_values <- as.data.frame(env_vars, xy = TRUE, na.rm = TRUE)
 env_values <- env_values%>%
   select(!cover)
 
-install.packages("FNN")
 library(FNN)  # Fast nearest neighbor matching
 
 # Select only environmental columns (ignore lat/lon)
 env_only <- env_values[, -c(1,2)]
 
 # Select the pseudo-absence environmental values
-pseudo_abs_env <- as.data.frame(massivePAs[[1]])  # all inside niche space
+pseudo_abs_env <- as.data.frame(massivePAs[[3]])  # all outside niche space
 
 pseudo_abs_env <- pseudo_abs_env%>%
   select(terrain_ruggedness_index,
@@ -95,24 +97,5 @@ points(massive_occs, col = "yellow")
 
 write.csv(massive_pa_xy, "data/pseudoabsences/ecoPA_massivepas.csv")
 
-########## 3) Saving outputs ##########
-### Rounded presences
 
-#massive_rounded_pres = massive_niche[[3]]
-#colnames(massive_rounded_pres) = massive_niche[[2]]
-
-#write.csv(massive_rounded_pres,
-          "Rounded_presences_massive.csv",
-          row.names = F)
-
-### Pseudo-absences
-
-#for (i in 1:length(massivePAs)){
-  
-#  pseudo_abs_step = massivePAs[[i]]
-  
-#  write.csv(pseudo_abs_step,
-#            paste0("PA_", names(massivePAs)[i], ".csv"),
-#            row.names = F)
-#}
 

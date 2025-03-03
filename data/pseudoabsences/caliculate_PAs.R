@@ -26,7 +26,7 @@ caliculate <- sponge_info%>%
                 "o2_mean",
                 "si_mean",                   
                 "thetao_mean")
-
+caliculate_niche_borders <- summary(caliculate)
 
 # define niche space
 
@@ -34,19 +34,19 @@ caliculate_niche = SpeciesNiche(data = caliculate,
                                 bins_sizes = c(10, # TRI dimension will be represented with bins of size 10
                                                0.1, # current v dimension will be represented with bins of size 0.1
                                                10, # O2 dimension will be represented with bins of size 1
-                                               10, # Si dimension will be represented with bins of size 1
-                                               2), # temp dimension will be represented with bins of size 1
-                                niche_border = c(0, 1265, # TRI dimension goes from 0 to 1265
-                                                 0, 1.30, # Current V dimension goes from 1.049610e-06 to 1.290776 m/s
-                                                 0, 409, # O2 dimension goes from 0.229 to 409 
-                                                 1, 300, # Si dimension goes from 1.37, 300
-                                                 -2, 20))  # temp dimension goes from -2 to 20 coverage
+                                               1, # Si dimension will be represented with bins of size 1
+                                               1), # temp dimension will be represented with bins of size 1
+                                niche_border = c(2, 160, # TRI dimension goes from 2 to 160
+                                                 0, 0.2, # Current V dimension goes from 0 to 0.2 m/s
+                                                 200, 310, # O2 dimension goes from  200 to 310 
+                                                 4, 9, # Si dimension goes from 4, 9
+                                                 0, 11))  # temp dimension goes from 0 to 11 c
 
 # generate PAs in niche space
 
 caliculatePAs <- PAGeneration(data = caliculate_niche,
                               nb_pa = 10000,
-                              ratio_pa_in = c(1, 2/3, 1/2))
+                              ratio_pa_in = 0)
 
 ## assigning location
 

@@ -127,9 +127,9 @@ ecoPA_stipulate_eval
 #class          : ModelEvaluation 
 #n presences    : 26 
 #n absences     : 2000 
-#AUC            : 0.7552692 
-#cor            : 0.1065237 
-#max TPR+TNR at : 0.4885508 
+#AUC            : 0.6655385 
+#cor            : 0.06928411 
+#max TPR+TNR at : 0.4210486 
 
 
 plot(ecoPA_stipulate_eval, 'ROC') # not great but potentially more realistic

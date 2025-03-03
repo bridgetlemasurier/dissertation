@@ -27,6 +27,7 @@ papillate <- sponge_info%>%
                 "si_mean",                   
                 "thetao_mean")
 
+papillate_niche_borders <- summary(papillate)
 
 # define niche space
 
@@ -34,19 +35,19 @@ papillate_niche = SpeciesNiche(data = papillate,
                              bins_sizes = c(10, # TRI dimension will be represented with bins of size 10
                                             0.1, # current v dimension will be represented with bins of size 0.1
                                             10, # O2 dimension will be represented with bins of size 1
-                                            10, # Si dimension will be represented with bins of size 1
-                                            2), # temp dimension will be represented with bins of size 1
-                             niche_border = c(0, 1265, # TRI dimension goes from 0 to 1265
-                                              0, 1.30, # Current V dimension goes from 1.049610e-06 to 1.290776 m/s
-                                              0, 409, # O2 dimension goes from 0.229 to 409 
-                                              1, 300, # Si dimension goes from 1.37, 300
-                                              -2, 20))  # temp dimension goes from -2 to 20 coverage
+                                            1, # Si dimension will be represented with bins of size 1
+                                            1), # temp dimension will be represented with bins of size 1
+                             niche_border = c(0, 430, # TRI dimension goes from 0 to 430
+                                              0, 0.3, # Current V dimension goes from 0 to 0.3 m/s
+                                              170, 340, # O2 dimension goes from 170 to 340 
+                                              4, 14, # Si dimension goes from 4, 14
+                                              -1, 9))  # temp dimension goes from -1 to 9 C
 
 # generate PAs in niche space
 
 papillatePAs <- PAGeneration(data = papillate_niche,
                            nb_pa = 10000,
-                           ratio_pa_in = c(1, 2/3, 1/2))
+                           ratio_pa_in = 0)
 
 ## assigning location
 
@@ -61,7 +62,9 @@ env_values <- env_values%>%
 env_only <- env_values[, -c(1,2)]
 
 # Select the pseudo-absence environmental values
-pseudo_abs_env <- as.data.frame(papillatePAs[[1]])  # all inside niche space
+pseudo_abs_env <- as.data.frame(papillatePAs[[1]]) 
+
+# all inside niche space
 
 pseudo_abs_env <- pseudo_abs_env%>%
   select(terrain_ruggedness_index,

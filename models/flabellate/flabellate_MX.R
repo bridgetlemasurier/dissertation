@@ -123,13 +123,13 @@ ecopa_test = flabellate_pas[group == 1, ]
 ecoPA_flabellate_eval = evaluate(presence_test, ecopa_test, flabellate_MX, env_vars_raster)
 ecoPA_flabellate_eval
 
-#ecoPA_flabellate_eval
+#ecoPA_flabellate_eval with correct niche
 #class          : ModelEvaluation 
 #n presences    : 87 
 #n absences     : 2000 
-#AUC            : 0.8427069 
-#cor            : 0.3141391 
-#max TPR+TNR at : 0.2212427 
+#AUC            : 0.8496552 
+#cor            : 0.2794112 
+#max TPR+TNR at : 0.3095905
 
 
 plot(ecoPA_flabellate_eval, 'ROC') # not great but potentially more realistic

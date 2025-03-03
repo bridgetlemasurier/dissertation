@@ -27,26 +27,28 @@ flabellate <- sponge_info%>%
                 "si_mean",                   
                 "thetao_mean")
 
+summary(flabellate)
+
 
 # define niche space
 
 flabellate_niche = SpeciesNiche(data = flabellate,
                                  bins_sizes = c(10, # TRI dimension will be represented with bins of size 10
-                                                0.1, # current v dimension will be represented with bins of size 0.1
+                                                0.01, # current v dimension will be represented with bins of size 0.1
                                                 10, # O2 dimension will be represented with bins of size 1
-                                                10, # Si dimension will be represented with bins of size 1
-                                                2), # temp dimension will be represented with bins of size 1
-                                 niche_border = c(0, 1265, # TRI dimension goes from 0 to 1265
-                                                  0, 1.30, # Current V dimension goes from 1.049610e-06 to 1.290776 m/s
-                                                  0, 409, # O2 dimension goes from 0.229 to 409 
-                                                  1, 300, # Si dimension goes from 1.37, 300
-                                                  -2, 20))  # temp dimension goes from -2 to 20 coverage
+                                                1, # Si dimension will be represented with bins of size 1
+                                                1), # temp dimension will be represented with bins of size 1
+                                 niche_border = c(0, 610, # TRI dimension goes from 0 to 610
+                                                  0, 0.2, # Current V dimension goes from 0 to 0.2 m/s
+                                                180, 310, # O2 dimension goes from 184 to 306 
+                                                  4, 12, # Si dimension goes from 4 to 12
+                                                  1, 14))  # temp dimension goes from 1 to 14 c
 
 # generate PAs in niche space
 
 flabellatePAs <- PAGeneration(data = flabellate_niche,
                                nb_pa = 10000,
-                               ratio_pa_in = c(1, 2/3, 1/2))
+                               ratio_pa_in = 0)
 
 ## assigning location
 

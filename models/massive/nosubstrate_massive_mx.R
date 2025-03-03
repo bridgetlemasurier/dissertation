@@ -125,9 +125,6 @@ massive_occs <- massive%>%
   dplyr::select(MiddleLongitude, MiddleLatitude)  # massive presence data
 
 
-plot(env_vars,1)
-points(massive_occs, col = "red")
-
 # split presence data ----
 group = kfold(massive_occs, 5) #split the data into 5 portions
 
@@ -144,6 +141,11 @@ massive_pas <- read.csv("data/pseudoabsences/ecoPA_massivepas.csv")
 massive_pas <- massive_pas%>%
   select(x,y)
 
+plot(env_vars,1)
+points(massive_pas, col = "red")
+points(massive_occs, col = "yellow")
+
+
 #split for training model performances
 pa_train = massive_pas[group != 1, ]
 pa_test = massive_pas[group == 1, ]
@@ -152,12 +154,22 @@ pa_test = massive_pas[group == 1, ]
 ecoPA_massive_eval = evaluate(massive_test, pa_test, massive_MX, env_vars_raster)
 ecoPA_massive_eval
 
+# wrong niche (all inside Natl niche)
 #class          : ModelEvaluation 
 #n presences    : 470 
 #n absences     : 1998 
 #AUC            : 0.9324963 
 #cor            : 0.7390623 
 #max TPR+TNR at : 0.4459068 
+
+# all PAs outside niche (defined by max and min values for massive)
+# ecoPA_massive_eval
+# class          : ModelEvaluation 
+# n presences    : 470 
+# n absences     : 1993 
+# AUC            : 0.9034552 
+# cor            : 0.6287589 
+# max TPR+TNR at : 0.4922526 
 
 response(massive_MX)
 
