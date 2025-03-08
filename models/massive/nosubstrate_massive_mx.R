@@ -64,6 +64,7 @@ ns_massive_background = randomPoints(ns_env_vars, n=10000,ext=NAtl_extent, extf 
 colnames(ns_massive_background) = c('lon', 'lat')
 group = kfold(ns_massive_background, 5)
 
+
 #pseudo-absences for training model performances
 ns_backg_train = ns_massive_background[group != 1, ]
 ns_backg_test = ns_massive_background[group == 1, ]
@@ -80,7 +81,7 @@ ns_massive_eval
 #cor            : 0.7141856 
 #max TPR+TNR at : 0.3949634 
 
-response(ns_massive_MX)
+plot(ns_massive_eval, 'ROC')
 
 # heat map ----
 ns_massive_prediction = predict(ns_env_vars, ns_massive_MX, ext=NAtl_extent, progress='')
@@ -92,7 +93,6 @@ par(mfrow=c(1,1))
 
 plot(ns_massive_prediction, main='Present day predicted suitability') # yay!
 
-plot(ns_massive_eval, 'ROC')
 
 #projecting -----
 # SSP2
@@ -142,6 +142,7 @@ massive_pas <- massive_pas%>%
   select(x,y)
 
 plot(env_vars,1)
+points(background_points, col = "blue")
 points(massive_pas, col = "red")
 points(massive_occs, col = "yellow")
 
@@ -150,17 +151,10 @@ points(massive_occs, col = "yellow")
 pa_train = massive_pas[group != 1, ]
 pa_test = massive_pas[group == 1, ]
 
+
 #evaluate ----
 ecoPA_massive_eval = evaluate(massive_test, pa_test, massive_MX, env_vars_raster)
 ecoPA_massive_eval
-
-# wrong niche (all inside Natl niche)
-#class          : ModelEvaluation 
-#n presences    : 470 
-#n absences     : 1998 
-#AUC            : 0.9324963 
-#cor            : 0.7390623 
-#max TPR+TNR at : 0.4459068 
 
 # all PAs outside niche (defined by max and min values for massive)
 # ecoPA_massive_eval
@@ -175,32 +169,83 @@ response(massive_MX)
 
 plot(ecoPA_massive_eval, 'ROC')
 
-#heat map ----
-NAtl_extent <- raster::extent(-60, 45, 41, 83)
 
+# binary map background model ----
+#heat maps
+# present
 massive_prediction = predict(env_vars_raster, massive_MX, ext=NAtl_extent, progress='')
-# use model xm to predict species presence with stck over given ext
-#0 1 scale where 1 indicates the most suitable habitat 
-#and 0 least suitable habitat 
+plot(massive_prediction, main='Present day predicted suitability') 
 
-plot(massive_prediction, main='Present day (EcoPA)') # yay!
-
-#projecting -----
-# SSP2
+#SSP2
 SSP2 <- rast("data/environment/ssp45/SSP2_predictors4050.tif")
 SSP2_stack <- raster::stack(SSP2)
 
-ep_SSP2_massive_prediction = predict(SSP2_stack, massive_MX, ext=NAtl_extent, progress='')
+SSP2_massive_prediction = predict(SSP2_stack, massive_MX, ext=NAtl_extent, progress='')
+SSP2_massive_prediction
 
-plot(ep_SSP2_massive_prediction, main = "2040-2050 SSP2 (EcoPA)")
+plot(SSP2_massive_prediction, main = "2040-2050 SSP2 predicted suitability")
 
 #SSP5
 SSP5 <- rast("data/environment/ssp85/SSP5_predictors4050.tif")
 SSP5_stack <- raster::stack(SSP5)
 
-ep_SSP5_massive_prediction = predict(SSP5_stack, massive_MX, ext=NAtl_extent, progress='')
+SSP5_massive_prediction = predict(SSP5_stack, massive_MX, ext=NAtl_extent, progress='')
 
-plot(ep_SSP5_massive_prediction, main = "2040-2050 SSP5 (EcoPA)")
+plot(SSP5_massive_prediction, main = "2040-2050 SSP5 predicted suitability")
 
+#binary maps based on TPR+TNR threashold
+threshold <- 0.4922526
 
+binary_map <- massive_prediction >= threshold
+plot(binary_map)
 
+SSP2_binary_map <- SSP2_massive_prediction >= threshold
+plot(SSP2_binary_map)
+
+SSP5_binary_map <- SSP5_massive_prediction >= threshold
+plot(SSP5_binary_map)  
+
+# write rasters
+
+writeRaster(binary_map, "models/massive/present_binary.tif", format="GTiff", overwrite=TRUE)
+writeRaster(SSP2_binary_map, "models/massive/SSP2_binary.tif", format="GTiff", overwrite=TRUE)
+writeRaster(SSP5_binary_map, "models/massive/SSP5_binary.tif", format="GTiff", overwrite=TRUE)
+
+##############################################################
+# Models with ecoPAs------
+ecoPA_model <- maxent(env_vars_raster, massive_train, pa_train)
+plot(ecoPA_model)
+response(ecoPA_model)
+
+ecoPA_massive_eval = evaluate(massive_test, pa_test, ecoPA_model, env_vars_raster)
+ecoPA_massive_eval
+
+#class          : ModelEvaluation 
+#n presences    : 470 
+#n absences     : 2011 
+#AUC            : 0.9645741 
+#cor            : 0.8589589 
+#max TPR+TNR at : 0.1978522 
+
+plot(ecoPA_massive_eval, 'ROC')
+
+eco_PAmassive_prediction = predict(env_vars_raster, ecoPA_model, ext=NAtl_extent, progress='')
+plot(eco_PAmassive_prediction, main='Present day predicted suitability') 
+
+ecoPA_SSP2_massive_prediction = predict(SSP2_stack, ecoPA_model, ext=NAtl_extent, progress='')
+plot(ecoPA_SSP2_massive_prediction, main = "ssp2")
+
+ecoPA_SSP5_massive_prediction = predict(SSP5_stack, ecoPA_model, ext=NAtl_extent, progress='')
+plot(ecoPA_SSP5_massive_prediction, main = "ssp5")
+
+#binary maps based on TPR+TNR threashold
+threshold <- 0.5
+
+ecoPA_binary_map <- massive_prediction >= threshold
+plot(binary_map)
+
+SSP2_binary_map <- SSP2_massive_prediction >= threshold
+plot(SSP2_binary_map)
+
+SSP5_binary_map <- SSP5_massive_prediction >= threshold
+plot(SSP5_binary_map)  

@@ -48,14 +48,14 @@ massive_niche = SpeciesNiche(data = massive,
 
 massivePAs <- PAGeneration(data = massive_niche,
              nb_pa = 10000,
-             ratio_pa_in = c(1/2, 1/3, 0))
+             ratio_pa_in = 0)
 
 ## assigning location
 
 # Convert raster to a dataframe with coordinates
 env_values <- as.data.frame(env_vars, xy = TRUE, na.rm = TRUE)
 env_values <- env_values%>%
-  select(!cover)
+  dplyr::select(!cover)
 
 library(FNN)  # Fast nearest neighbor matching
 
@@ -63,10 +63,10 @@ library(FNN)  # Fast nearest neighbor matching
 env_only <- env_values[, -c(1,2)]
 
 # Select the pseudo-absence environmental values
-pseudo_abs_env <- as.data.frame(massivePAs[[3]])  # all outside niche space
+pseudo_abs_env <- as.data.frame(massivePAs[[1]])  # all outside niche space
 
 pseudo_abs_env <- pseudo_abs_env%>%
-  select(terrain_ruggedness_index,
+  dplyr::select(terrain_ruggedness_index,
          sws_mean,
          o2_mean,
          si_mean,
@@ -87,9 +87,13 @@ head(pseudo_abs_points)
 
 massive_pa_xy <- matched_coords
 
+massive_pa_xy <- massive_pa_xy%>%
+  rename(long = "x",
+         lat = "y")
+
 massive_occs <- sponge_info%>%
   filter(morphotype == "massive")%>%
-  select(MiddleLongitude, MiddleLatitude)
+  dplyr::select(MiddleLongitude, MiddleLatitude)
 
 plot(env_vars,1)
 points(massive_pa_xy, col = "red")
