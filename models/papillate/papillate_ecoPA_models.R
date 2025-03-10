@@ -15,7 +15,7 @@ library(raster)
 library(terra)
 library(dismo)
 library(rJava)
-library(gridExtra)
+library(viridis)
 
 # DATA ----
 # Oceanic conditions
@@ -108,22 +108,23 @@ y_limits <- c(ymin(NAtl_extent), ymax(NAtl_extent))
 
 # Present Day
 current_habitats <- predict(env_vars, ecoPA_papillate_MX, ext=NAtl_extent, progress='')
-current_habitats <- rast(current_habitats)
-plot(current_habitats,col = viridis(100), legend = FALSE,
+current_habitats_terra <- rast(current_habitats)
+plot(current_habitats_terra,col = viridis(100), legend = FALSE,
      xlim = x_limits, ylim = y_limits)
 
 # 2040-2050
 
 # ssp2
 ssp2_habitats <- predict(ssp2, ecoPA_papillate_MX, ext=NAtl_extent, progress='')
-ssp2_habitats <- rast(ssp2_habitats)
-plot(ssp2_habitats, col = viridis(100), legend = FALSE,
+ssp2_habitats_terra <- rast(ssp2_habitats)
+plot(ssp2_habitats_terra, col = viridis(100), legend = FALSE,
      xlim = x_limits, ylim = y_limits)
+
 
 # ssp5
 ssp5_habitats <- predict(ssp5, ecoPA_papillate_MX, ext=NAtl_extent, progress='')
-ssp5_habitats <- rast(ssp5_habitats)
-plot(ssp5_habitats, col = viridis(100), legend = TRUE,
+ssp5_habitats_terra <- rast(ssp5_habitats)
+plot(ssp5_habitats_terra, col = viridis(100), legend = TRUE,
      xlim = x_limits, ylim = y_limits)
 
 

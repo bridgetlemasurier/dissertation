@@ -15,7 +15,7 @@ library(raster)
 library(terra)
 library(dismo)
 library(rJava)
-library(rasterVis)
+library(viridis)
 
 # DATA ----
 # Oceanic conditions

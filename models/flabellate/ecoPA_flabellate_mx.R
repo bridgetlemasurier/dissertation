@@ -15,6 +15,7 @@ library(raster)
 library(terra)
 library(dismo)
 library(rJava)
+library(viridis)
 
 # DATA ----
 # Oceanic conditions
@@ -102,20 +103,28 @@ plot(ecoPA_flabellate_eval, 'ROC') # stunning gorgeous everything in between
 ## HEAT MAPS ----
 # set extent
 NAtl_extent <- raster::extent(-60, 45, 41, 83)
+x_limits <- c(xmin(NAtl_extent), xmax(NAtl_extent))
+y_limits <- c(ymin(NAtl_extent), ymax(NAtl_extent))
 
 # Present Day
 current_habitats <- predict(env_vars, ecoPA_flabellate_MX, ext=NAtl_extent, progress='')
-plot(current_habitats, main = "Present Day Habitat Suitability")
+current_habitats_terra <- rast(current_habitats)
+plot(current_habitats_terra,col = viridis(100), legend = FALSE,
+     xlim = x_limits, ylim = y_limits)
 
 # 2040-2050
 
 # ssp2
 ssp2_habitats <- predict(ssp2, ecoPA_flabellate_MX, ext=NAtl_extent, progress='')
-plot(ssp2_habitats, main='ssp2 Habitat Suitability')
+ssp2_habitats_terra <- rast(ssp2_habitats)
+plot(ssp2_habitats_terra, col = viridis(100), legend = FALSE,
+     xlim = x_limits, ylim = y_limits)
 
-# ssp2
+# ssp5
 ssp5_habitats <- predict(ssp5, ecoPA_flabellate_MX, ext=NAtl_extent, progress='')
-plot(ssp5_habitats, main='ssp5 Habitat Suitability')
+ssp5_habitats_terra <- rast(ssp5_habitats)
+plot(ssp5_habitats_terra, col = viridis(100), legend = TRUE,
+     xlim = x_limits, ylim = y_limits)
 
 #binary maps
 threashold <- 0.5
@@ -147,7 +156,7 @@ levels(ssp2change) <- data.frame(
   value = c(-1, 0, 1, 2),
   response = c("Absent", "Loss", "Gain", "Present"))
 
-plot(ssp2change, col = c("lightblue", "red", "darkgreen", "gold"))
+plot(ssp2change, col = c("#0A00F92F", "#9A0000FF","#0AB4A9F9", "#FABA39FF"))
 
 # ssp5
 # change values of absence for SSP5
@@ -161,7 +170,7 @@ levels(ssp5change) <- data.frame(
   value = c(-1, 0, 1, 2),
   response = c("Absent", "Loss", "Gain", "Present"))
 
-plot(ssp5change, col = c("lightblue", "red", "darkgreen", "gold"))
+plot(ssp5change, col = c("#0A00F92F", "#9A0000FF","#0AB4A9F9", "#FABA39FF"))
 
 # Pixels loss gain stable ----
 
@@ -283,12 +292,39 @@ ssp5lat_summary <- ssp5change_df %>%
 lat_summary <- bind_rows(ssp2lat_summary, ssp5lat_summary)
 
 latitude_shift_plot <- lat_summary%>%
+  mutate(ssp = as.factor(ssp),
+         ssp = toupper(ssp))%>%
   group_by(ssp)%>%
   ggplot(aes(x = y, y = percent_gain, colour = ssp))+
-  geom_point()+
+  geom_point(alpha = 1)+
   geom_smooth(method = "lm")+
-  labs(x = "Latitude",
-       y = "Increase in Habitat Suitability (%)")
+  labs(x = "Latitude (°)",
+       y = "Increase in Habitat Suitability (%)",
+       colour = "Climate Change
+     Scenario")+
+  scale_colour_manual(values = c("SSP2" = "#00BFC4" ,
+                                 "SSP5" = "#F8766D")) +
+  theme_bw() +
+  theme(panel.grid = element_blank())
 
 ggsave("models/flabellate/latitudeshift_flabellate.png", latitude_shift_plot,
+       width = 8, height = 6, dpi = 300)
+
+latitude_shift_loessplot <- lat_summary%>%
+  mutate(ssp = as.factor(ssp),
+         ssp = toupper(ssp))%>%
+  group_by(ssp)%>%
+  ggplot(aes(x = y, y = percent_gain, colour = ssp))+
+  geom_point(alpha = 1)+
+  geom_smooth(method = "loess")+
+  labs(x = "Latitude (°)",
+       y = "Increase in Habitat Suitability (%)",
+       colour = "Climate Change
+     Scenario")+
+  scale_colour_manual(values = c("SSP2" = "#00BFC4" ,
+                                 "SSP5" = "#F8766D")) +
+  theme_bw() +
+  theme(panel.grid = element_blank())
+
+ggsave("models/flabellate/latitudeshiftloess_flabellate.png", latitude_shift_loessplot,
        width = 8, height = 6, dpi = 300)
