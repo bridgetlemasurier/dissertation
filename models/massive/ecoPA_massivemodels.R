@@ -106,17 +106,17 @@ NAtl_extent <- raster::extent(-60, 45, 41, 83)
 
 # Present Day
 current_habitats <- predict(env_vars, ecoPA_massive_MX, ext=NAtl_extent, progress='')
-plot(current_habitats, main = "Present Day Habitat Suitability")
+plot(current_habitats, main = "Present Day Habitat Suitability",col = viridis(100))
 
 # 2040-2050
 
 # ssp2
 ssp2_habitats <- predict(ssp2, ecoPA_massive_MX, ext=NAtl_extent, progress='')
-plot(ssp2_habitats, main='ssp2 Habitat Suitability')
+plot(ssp2_habitats, main='ssp2 Habitat Suitability',col = viridis(100))
 
 # ssp2
 ssp5_habitats <- predict(ssp5, ecoPA_massive_MX, ext=NAtl_extent, progress='')
-plot(ssp5_habitats, main='ssp5 Habitat Suitability')
+plot(ssp5_habitats, main='ssp5 Habitat Suitability',col = viridis(100))
 
 #binary maps
 threashold <- 0.5
@@ -148,7 +148,8 @@ levels(ssp2change) <- data.frame(
   value = c(-1, 0, 1, 2),
   response = c("Absent", "Loss", "Gain", "Present"))
 
-plot(ssp2change, col = c("lightblue", "red", "darkgreen", "gold"))
+plot(ssp2change, col = c("#0A00F92F", "#9A0000FF","#0AB4A9F9", "#FABA39FF"))
+
 
 # ssp5
 # change values of absence for SSP2 
@@ -162,7 +163,7 @@ levels(ssp5change) <- data.frame(
   value = c(-1, 0, 1, 2),
   response = c("Absent", "Loss", "Gain", "Present"))
 
-plot(ssp5change, col = c("lightblue", "red", "darkgreen", "gold"))
+plot(ssp5change, col = c("#0A00F92F", "#9A0000FF","#0AB4A9F9", "#FABA39FF"))
 
 # Pixels loss gain stable ----
 
