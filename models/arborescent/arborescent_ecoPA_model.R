@@ -98,4 +98,16 @@ ecoPA_arborescent_eval
 # need to get table here for sens, spec, AUC and MSS
 
 plot(ecoPA_arborescent_eval, 'ROC') # a bit all over the place
+
+## HEAT MAPS ----
+# set extent
+NAtl_extent <- raster::extent(-60, 45, 41, 83)
+x_limits <- c(xmin(NAtl_extent), xmax(NAtl_extent))
+y_limits <- c(ymin(NAtl_extent), ymax(NAtl_extent))
+
+# Present Day
+current_habitats <- predict(env_vars, ecoPA_arborescent_MX, ext=NAtl_extent, progress='')
+current_habitats_terra <- rast(current_habitats)
+plot(current_habitats_terra,col = viridis(100), legend = TRUE,
+     xlim = x_limits, ylim = y_limits)
 ##########################################################################################

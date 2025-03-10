@@ -110,18 +110,22 @@ y_limits <- c(ymin(NAtl_extent), ymax(NAtl_extent))
 
 # Present Day
 current_habitats <- predict(env_vars, ecoPA_massive_MX, ext=NAtl_extent, progress='')
-plot(current_habitats,col = viridis(100), legend = FALSE, main = "Present Day",
+current_habitats_terra <- rast(current_habitats)
+plot(current_habitats_terra,col = viridis(100), legend = FALSE,
      xlim = x_limits, ylim = y_limits)
+
 # 2040-2050
 
 # ssp2
 ssp2_habitats <- predict(ssp2, ecoPA_massive_MX, ext=NAtl_extent, progress='')
-plot(ssp2_habitats, col = viridis(100), legend = FALSE,
+ssp2_habitats_terra <- rast(ssp2_habitats)
+plot(ssp2_habitats_terra, col = viridis(100), legend = FALSE,
      xlim = x_limits, ylim = y_limits)
 
 # ssp5
 ssp5_habitats <- predict(ssp5, ecoPA_massive_MX, ext=NAtl_extent, progress='')
-plot(ssp5_habitats, col = viridis(100), legend = TRUE,
+ssp5_habitats_terra <- rast(ssp5_habitats)
+plot(ssp5_habitats_terra, col = viridis(100), legend = TRUE,
      xlim = x_limits, ylim = y_limits)
 
 #binary maps
@@ -308,4 +312,23 @@ latitude_shift_plot <- lat_summary%>%
 
 
 ggsave("models/massive/latitudeshift_massive.png", latitude_shift_plot,
+       width = 8, height = 6, dpi = 300)
+
+latitude_shift_loessplot <- lat_summary%>%
+  mutate(ssp = as.factor(ssp),
+         ssp = toupper(ssp))%>%
+  group_by(ssp)%>%
+  ggplot(aes(x = y, y = percent_gain, colour = ssp))+
+  geom_point(alpha = 1)+
+  geom_smooth(method = "loess")+
+  labs(x = "Latitude (°)",
+       y = "Increase in Habitat Suitability (%)",
+       colour = "Climate Change
+     Scenario")+
+  scale_colour_manual(values = c("SSP2" = "#00BFC4" ,
+                                 "SSP5" = "#F8766D")) +
+  theme_bw() +
+  theme(panel.grid = element_blank())
+
+ggsave("models/massive/latitudeshiftloess_massive.png", latitude_shift_loessplot,
        width = 8, height = 6, dpi = 300)

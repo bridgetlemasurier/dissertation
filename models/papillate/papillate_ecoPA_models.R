@@ -312,3 +312,22 @@ latitude_shift_plot <- lat_summary%>%
 
 ggsave("models/papillate/latitudeshift_papillate.png", latitude_shift_plot,
        width = 8, height = 6, dpi = 300)
+
+latitude_shift_loessplot <- lat_summary%>%
+  mutate(ssp = as.factor(ssp),
+         ssp = toupper(ssp))%>%
+  group_by(ssp)%>%
+  ggplot(aes(x = y, y = percent_gain, colour = ssp))+
+  geom_point(alpha = 1)+
+  geom_smooth(method = "loess")+
+  labs(x = "Latitude (°)",
+       y = "Increase in Habitat Suitability (%)",
+       colour = "Climate Change
+     Scenario")+
+  scale_colour_manual(values = c("SSP2" = "#00BFC4" ,
+                                 "SSP5" = "#F8766D")) +
+  theme_bw() +
+  theme(panel.grid = element_blank())
+
+ggsave("models/papillate/latitudeshiftloess_papillate.png", latitude_shift_loessplot,
+       width = 8, height = 6, dpi = 300)
