@@ -107,9 +107,6 @@ NAtl_extent <- raster::extent(-60, 45, 41, 83)
 x_limits <- c(xmin(NAtl_extent), xmax(NAtl_extent))
 y_limits <- c(ymin(NAtl_extent), ymax(NAtl_extent))
 
-par(mfrow = c(1, 3),mar = c(4, 4, 4, 2)) 
-
-par(mfrow = c(1,1))
 
 # Present Day
 current_habitats <- predict(env_vars, ecoPA_massive_MX, ext=NAtl_extent, progress='')
