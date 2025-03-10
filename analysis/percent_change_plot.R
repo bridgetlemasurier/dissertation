@@ -45,14 +45,22 @@ changes%>%
   ggplot(aes(x = morphotype, y = percent, fill = category)) +
   geom_bar(stat = "identity", position = "dodge")
 
-changes%>%
+percent_change_plot <- changes%>%
+  mutate(morphotype = str_to_title(morphotype),
+         scenario = toupper(scenario)) %>%
   group_by(scenario, morphotype)%>%
   ggplot(aes(x = morphotype, y = percent, fill = category)) +
   geom_bar(stat = "identity", position = "dodge",color = "black") +
   facet_grid(scenario ~ .) +  # This arranges scenarios in rows
-  labs(x = "Change from Present Day",
+  labs(x = "Morphotype",
        y = "Percentage of Potential Presence (%)",
-       legend = "Shift")+
-  scale_fill_viridis_d(option = "D")+
+       fill = 
+       "Change from 
+Present Day")+
+  scale_fill_manual(values = c("Stable" = "#FABA39FF", 
+                               "Loss" = "#9A0000FF", 
+                               "Gain" = "#0AB4A9F9")) +
   theme_bw() +
   theme(panel.grid = element_blank())
+
+ggsave("analysis/percent_change_plot.png", width = 8, height = 6, dpi = 300)

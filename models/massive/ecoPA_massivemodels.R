@@ -15,6 +15,7 @@ library(raster)
 library(terra)
 library(dismo)
 library(rJava)
+library(rasterVis)
 
 # DATA ----
 # Oceanic conditions
@@ -103,20 +104,28 @@ plot(ecoPA_massive_eval, 'ROC') # stunning gorgeous everything in between
 ## HEAT MAPS ----
 # set extent
 NAtl_extent <- raster::extent(-60, 45, 41, 83)
+x_limits <- c(xmin(NAtl_extent), xmax(NAtl_extent))
+y_limits <- c(ymin(NAtl_extent), ymax(NAtl_extent))
+
+par(mfrow = c(1, 3),mar = c(4, 4, 4, 2)) 
+
+par(mfrow = c(1,1))
 
 # Present Day
 current_habitats <- predict(env_vars, ecoPA_massive_MX, ext=NAtl_extent, progress='')
-plot(current_habitats, main = "Present Day Habitat Suitability",col = viridis(100))
-
+plot(current_habitats,col = viridis(100), legend = FALSE, main = "Present Day",
+     xlim = x_limits, ylim = y_limits)
 # 2040-2050
 
 # ssp2
 ssp2_habitats <- predict(ssp2, ecoPA_massive_MX, ext=NAtl_extent, progress='')
-plot(ssp2_habitats, main='ssp2 Habitat Suitability',col = viridis(100))
+plot(ssp2_habitats, col = viridis(100), legend = FALSE,
+     xlim = x_limits, ylim = y_limits)
 
-# ssp2
+# ssp5
 ssp5_habitats <- predict(ssp5, ecoPA_massive_MX, ext=NAtl_extent, progress='')
-plot(ssp5_habitats, main='ssp5 Habitat Suitability',col = viridis(100))
+plot(ssp5_habitats, col = viridis(100), legend = TRUE,
+     xlim = x_limits, ylim = y_limits)
 
 #binary maps
 threashold <- 0.5
@@ -285,12 +294,21 @@ ssp5lat_summary <- ssp5change_df %>%
 lat_summary <- bind_rows(ssp2lat_summary, ssp5lat_summary)
 
 latitude_shift_plot <- lat_summary%>%
+  mutate(ssp = as.factor(ssp),
+         ssp = toupper(ssp))%>%
   group_by(ssp)%>%
   ggplot(aes(x = y, y = percent_gain, colour = ssp))+
-  geom_point()+
+  geom_point(alpha = 1)+
   geom_smooth(method = "lm")+
-  labs(x = "Latitude",
-       y = "Increase in Habitat Suitability (%)")
+  labs(x = "Latitude (°)",
+       y = "Increase in Habitat Suitability (%)",
+       colour = "Climate Change
+     Scenario")+
+  scale_colour_manual(values = c("SSP2" = "#00BFC4" ,
+                               "SSP5" = "#F8766D")) +
+  theme_bw() +
+  theme(panel.grid = element_blank())
+
 
 ggsave("models/massive/latitudeshift_massive.png", latitude_shift_plot,
        width = 8, height = 6, dpi = 300)
