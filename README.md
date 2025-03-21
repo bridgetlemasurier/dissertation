@@ -1,5 +1,5 @@
 # Dissertation
-Title: The environmental influence on present and future deep sea sponge morphotype distributions
+Title:
 
 ## Research Questions
 
