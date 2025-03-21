@@ -201,7 +201,7 @@ ssp2_percentchange <- ssp2change_df%>%
     morphotype = "massive")%>%
   dplyr::select(category, percent, scenario, morphotype)
 
-write.csv(ssp2_percentchange, "models/massive/massivessp2_percentchange.csv")
+#write.csv(ssp2_percentchange, "models/massive/massivessp2_percentchange.csv")
 
 ggplot(ssp2_percentchange, aes(x = category, 
                                y = percent, 
@@ -240,7 +240,7 @@ ssp5_percentchange <- ssp5change_df%>%
          morphotype = "massive")%>%
   dplyr::select(category, percent, scenario, morphotype)
 
-write.csv(ssp5_percentchange, "models/massive/massivessp5_percentchange.csv")
+#write.csv(ssp5_percentchange, "models/massive/massivessp5_percentchange.csv")
 
 ggplot(ssp5_percentchange, aes(x = category, 
                                y = percent, 
@@ -272,7 +272,8 @@ ssp2lat_summary <- ssp2change_df %>%
     percent_gain = (gain / total_cells) * 100,
     percent_stable = (stable / total_cells) * 100,
     percent_absent = (absent / total_cells) * 100,
-    ssp = "ssp2"
+    ssp = "ssp2",
+    morphotype = "massive"
   )
 # ssp5
 ssp5lat_summary <- ssp5change_df %>%
@@ -289,10 +290,13 @@ ssp5lat_summary <- ssp5change_df %>%
     percent_gain = (gain / total_cells) * 100,
     percent_stable = (stable / total_cells) * 100,
     percent_absent = (absent / total_cells) * 100,
-    ssp = "ssp5"
+    ssp = "ssp5",
+    morphotype = "massive"
   )
 
 lat_summary <- bind_rows(ssp2lat_summary, ssp5lat_summary)
+
+write.csv(lat_summary, "analysis/massive_latsummary.csv")
 
 latitude_shift_plot <- lat_summary%>%
   mutate(ssp = as.factor(ssp),
