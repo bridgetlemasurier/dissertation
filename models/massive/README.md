@@ -27,3 +27,6 @@ The percent changes were used in the [shift change analysis](analysis) section
 
 The [method_example](method_example) folder was used to generate graphs for figure 3 to explain the process of shift map formation.
 
+![alt_image](method_example/shift_map_process_FINAL.png)
+
+
