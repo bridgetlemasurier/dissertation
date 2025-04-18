@@ -17,10 +17,19 @@ Using records of sponge presences from ICES VME database, I used Maxent models t
 
 ### Script Availability
 #### Data
-The data of sponge presences and scripts used for intial exploration, tidying and classification can be found in (data/sponge).
+The data of sponge presences and scripts used for intial exploration, tidying and classification can be found in [sponge](data/sponge).
 
-The scripts used to prepare environmental data rasters can be found in (data/environment).
+The scripts used to prepare environmental data rasters can be found in [environment](data/environment).
 
-Pseudoabsence
+The pseudoabsences generated for each morphotype and the script used can be found in [pseudoabsences](data/pseudoabsences)
+
+### Models
+I modelled the distributions of 6 morphotypes:
+- [papillate](models/papillate)
+- massive
+- flabellate
+- caliculate
+- arborescent
+- stipitate
 
 ## Results summary
