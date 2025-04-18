@@ -14,3 +14,14 @@
 ### SSP5
 
 ![alt image](papillate_ssp5habitats.png)
+
+## Shift in suitable habitat
+### SSP2
+![alt image](papillate_ssp2shift_cbf.png)
+
+### SSP5
+![alt image](papillate_ssp5shift_cbf.png)
+
+
+The remaining files were used for shift and latitude change in the [analysis](analysis) section
+
