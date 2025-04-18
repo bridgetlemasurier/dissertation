@@ -13,4 +13,4 @@
 
 ### SSP5
 
-![alt image](papillate_ssp5_habitats.png)
+![alt image](papillate_ssp5habitats.png)
