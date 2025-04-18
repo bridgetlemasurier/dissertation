@@ -1,6 +1,6 @@
 # Caliculate Distributions
 
-[caliculate_ecoPA_models](caliculate_ecoPA_models.R) is the script used to model the present-day and future morphotype distributions of papillate sponges
+[caliculate_ecoPA_model](caliculate_ecoPA_model.R) is the script used to model the present-day and future morphotype distributions of caliculate sponges
 
 ## Present Day distribution
 
