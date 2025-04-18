@@ -23,5 +23,5 @@
 ![alt image](papillate_ssp5shift_cbf.png)
 
 
-The remaining files were used for shift and latitude change in the [analysis](analysis) section
+The percent changes were used in the [shift change analysis](analysis) section
 
