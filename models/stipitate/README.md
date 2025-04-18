@@ -1,6 +1,6 @@
 # Stipitate Distribution
 
-[stipitate_ecoPA_models](stipitate_ecoPA_model.R) is the script used to model the present-day and future morphotype distributions of stipitate sponges
+[stipitate_ecoPA_model](stipitate_ecoPA_model.R) is the script used to model the present-day and future morphotype distributions of stipitate sponges
 
 ## Present Day distribution
 
