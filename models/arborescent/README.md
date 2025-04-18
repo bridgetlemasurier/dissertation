@@ -5,3 +5,5 @@
 ## Present Day distribution
 
 ![alt image](arborescent_presenthabitats.png)
+
+I didn't predict future arborescent distributions since AUC = 0.63 < 0.8 which was the cut off for a reliable model
