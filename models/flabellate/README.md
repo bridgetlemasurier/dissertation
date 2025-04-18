@@ -1,6 +1,6 @@
 # Flabellate Distributions
 
-[flabellate_ecoPA_model](flabellate_ecoPA_mx.R) is the script used to model the present-day and future morphotype distributions of flabellate sponges
+[flabellate_ecoPA_mx](flabellate_ecoPA_mx.R) is the script used to model the present-day and future morphotype distributions of flabellate sponges
 
 ## Present Day distribution
 
