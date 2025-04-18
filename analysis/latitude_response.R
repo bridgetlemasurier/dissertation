@@ -2,11 +2,14 @@
 # 11/3/2024
 
 #Aim
-# To combine latitudinal responses in singular plot
+# 1. To combine latitudinal responses in singular plot
+# 2. To test latitudinal response using lms or glms
+
 
 # LIBRARY
 library(tidyverse)
 library(viridis)
+library(lme4)
 
 # DATA
 caliculate <- read.csv("analysis/caliculate_latsummary.csv")
@@ -59,10 +62,9 @@ latitude_shift <- latitude%>%
          ssp = toupper(ssp)) %>%
   group_by(morphotype, ssp)%>%
   ggplot(aes(x = y, y = percent_gain, colour = ssp))+
-  geom_point(alpha = 0.2) +
-  geom_smooth(method = "lm")+
+  geom_line()+
   facet_wrap(~morphotype) +  # This arranges scenarios in rows
-  scale_colour_manual(values = c("SSP2" = "#00BFD5" ,
+  scale_colour_manual(values = c("SSP2" = "#00B" ,
                                  "SSP5" = "#F9766D")) +
   labs(x = "Latitude (°)",
        y = "Percentage Gain (%)",
@@ -70,9 +72,10 @@ latitude_shift <- latitude%>%
      Scenario")+
   theme_bw() +
   theme(panel.grid = element_blank(),
-        plot.margin = margin(5, 5, 5, 5)) +  # Adjusts plot margins
-  scale_x_continuous(expand = c(0, 0)) +  # Removes extra space on x-axis
-  scale_y_continuous(expand = c(0, 0))
+        plot.margin = margin(5, 5, 5, 5),
+        legend.position = "bottom")+
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1)))
+  
 
 ggsave("analysis/latitudeshift.png", latitude_shift,
        width = 8, height = 6, dpi = 300)

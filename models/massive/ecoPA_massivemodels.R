@@ -23,6 +23,7 @@ env_vars <- rast("data/environment/NAtl_rasters/present_env_vars.tif")
 env_vars <- raster::stack(env_vars) # predictors
 env_vars <- dropLayer(env_vars, 6)  # currently not using substrate
 env_vars  # slay
+env_vars_terra <- rast(env_vars)
 
 # Sponges 
 sponge_info <- read.csv("data/environment/NAtl_rasters/red_spongeinfo.csv")  # sponges
@@ -164,6 +165,9 @@ plot(ssp2change, col = c("#0A00F92F", "#9A0000FF","#0AB4A9F9", "#FABA39FF"))
 # ssp5
 # change values of absence for SSP2 
 ssp5_map[ssp5_map == 0] <- -1
+
+plot(present_map, col = c("grey", "darkgreen")) # need for methods
+plot(ssp5_map, col = c("grey", "blue"))
 
 # create change map
 ssp5change <- present_map + ssp5_map

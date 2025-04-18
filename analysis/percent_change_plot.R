@@ -52,21 +52,23 @@ percent_change_plot <- changes%>%
   mutate(morphotype = factor(str_to_title(morphotype), 
                             levels = c("Papillate", "Massive", "Flabellate", "Caliculate")),
          scenario = toupper(scenario),
-         category = factor(category, levels = c("Stable", "Loss", "Gain"))) %>%
+         category = factor(category, levels = c("Gain","Stable","Loss"))) %>%
   group_by(scenario, morphotype)%>%
   ggplot(aes(x = morphotype, y = percent, fill = category)) +
   geom_bar(stat = "identity", position = "stack",color = "black") +
   facet_grid(scenario ~ .) +  # This arranges scenarios in rows
   labs(x = "Morphotype",
-       y = "Percentage of Potential Presence (%)",
+       y = "Percentage of Potential Habitat (%)",
        fill = 
-       "Change from 
-Present Day")+
+       "Change from Present-Day Habitat")+
   scale_fill_manual(values = c("Gain" = "#0AB4A9F9", 
                                "Loss" = "#9A0000FF", 
                                "Stable" = "#FABA39FF")) +
   theme_bw() +
-  theme(panel.grid = element_blank(),
+  scale_y_continuous(expand = c(0, 0)) +
+  theme_bw() +
+  theme(panel.spacing = unit(1, "lines"),
+        panel.grid = element_blank(),
         legend.position = "bottom")
 
 ggsave("analysis/percent_change_plot_stacked.png", width = 6, height = 6, dpi = 300)
