@@ -9,4 +9,8 @@
 ## 2050 Distributions
 ### SSP2
 
-![alt image](papillate_presenthabitats.png)
+![alt image](papillate_ssp2habitats.png)
+
+### SSP5
+
+![alt image](papillate_ssp5_habitats.png)
