@@ -11,25 +11,24 @@ Bridget Lemasurier (s2094420@ed.ac.uk)
 
 ##### 3. Are there differences in the response of morphotypes to projected climatic change?
 
-
-## Methods summary
-Using records of sponge presences from ICES VME database, I used Maxent models to predict the present-day and 2050 distributions of deep sea sponge morphotypes. I used envrionmental data from BIO-ORACLE to predict environmental suitability across the Northern Atlantic. I generated pseudoabsences using the EcoPA package by defining environmental niche boundaries for each morphotype based on the maximum and minimum values of each environmental variable. 
-
 ### Script Availability
 #### Data
 The data of sponge presences and scripts used for intial exploration, tidying and classification can be found in [sponge](data/sponge).
 
 The scripts used to prepare environmental data rasters can be found in [environment](data/environment).
 
-The pseudoabsences generated for each morphotype and the script used can be found in [pseudoabsences](data/pseudoabsences)
+The pseudoabsences and script used to generate them for each morphotype can be found in [pseudoabsences](data/pseudoabsences)
 
 ### Models
-I modelled the distributions of 6 morphotypes:
+I modelled the distributions of 6 morphotypes, each folder contains the scripts used in the modelling process and the maps of distribution produced:
 - [papillate](models/papillate)
-- massive
-- flabellate
-- caliculate
-- arborescent
-- stipitate
+- [massive](models/massive)
+- [flabellate](models/flabellate)
+- [caliculate](models/caliculate)
+- [arborescent](models/arborescent)
+- [stipitate](models/stipitate)
 
-## Results summary
+
+#### Analysis
+
+
