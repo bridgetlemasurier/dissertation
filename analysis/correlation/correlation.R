@@ -34,5 +34,5 @@ corr_plot <- ggcorrplot(correlation,
            colors = c("blue", "white", "red"), # Gradient from negative to positive
            ggtheme = theme_minimal() + theme(panel.grid = element_blank()))
 
-ggsave("analysis/correlation_plot.png", corr_plot, dpi = 300, width = 8, height = 6)
+ggsave("analysis/correlation/correlation_plot.png", corr_plot, dpi = 300, width = 8, height = 6)
        

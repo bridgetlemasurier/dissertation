@@ -12,10 +12,10 @@ library(viridis)
 library(lme4)
 
 # DATA
-caliculate <- read.csv("analysis/caliculate_latsummary.csv")
-flabellate <- read.csv("analysis/flabellate_latsummary.csv")
-massive <- read.csv("analysis/massive_latsummary.csv")
-papillate <- read.csv("analysis/papillate_latsummary.csv")
+caliculate <- read.csv("analysis/latitude/caliculate_latsummary.csv")
+flabellate <- read.csv("analysis/latitude/flabellate_latsummary.csv")
+massive <- read.csv("analysis/latitude/massive_latsummary.csv")
+papillate <- read.csv("analysis/latitude/papillate_latsummary.csv")
 
 
 # bind 
@@ -77,5 +77,5 @@ latitude_shift <- latitude%>%
   scale_y_continuous(expand = expansion(mult = c(0, 0.1)))
   
 
-ggsave("analysis/latitudeshift.png", latitude_shift,
+ggsave("analysis/latitude/latitudeshift.png", latitude_shift,
        width = 8, height = 6, dpi = 300)

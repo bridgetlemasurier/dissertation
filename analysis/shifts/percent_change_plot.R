@@ -71,9 +71,9 @@ percent_change_plot <- changes%>%
         panel.grid = element_blank(),
         legend.position = "bottom")
 
-ggsave("analysis/percent_change_plot_stacked.png", width = 6, height = 6, dpi = 300)
+ggsave("analysis/shifts/percent_change_plot_stacked.png", width = 6, height = 6, dpi = 300)
 
-## table of percentages
+## table of percentages for result write up
 wide_changes <- changes %>%
   select(-X) %>%
   pivot_wider(names_from = category, values_from = percent, values_fill = 0)
