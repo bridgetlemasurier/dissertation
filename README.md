@@ -11,8 +11,8 @@ Bridget Lemasurier (s2094420@ed.ac.uk)
 
 ##### 3. Are there differences in the response of morphotypes to projected climatic change?
 
-### Script Availability
-#### Data
+## Script Availability
+### Data
 The data of sponge presences and scripts used for intial exploration, tidying and classification can be found in [sponge](data/sponge).
 
 The scripts used to prepare environmental data rasters can be found in [environment](data/environment).
@@ -29,6 +29,6 @@ I modelled the distributions of 6 morphotypes, each folder contains the scripts 
 - [stipitate](models/stipitate)
 
 
-#### Analysis
-
+### Analysis
+The analysis used to compare morphotype responses to projected climate change can be found in the [analysis](analysis) folder
 
