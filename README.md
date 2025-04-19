@@ -19,6 +19,8 @@ The scripts used to prepare environmental data rasters can be found in [environm
 
 The pseudoabsences and script used to generate them for each morphotype can be found in [pseudoabsences](data/pseudoabsences)
 
+Details of the liscences for all the data I used throughout this project are available in [LISCENCE](LISCENCE)
+
 ### Models
 I modelled the distributions of 6 morphotypes, each folder contains the scripts used in the modelling process and the maps of distribution produced:
 - [papillate](models/papillate)
