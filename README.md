@@ -32,3 +32,7 @@ I modelled the distributions of 6 morphotypes, each folder contains the scripts 
 ### Analysis
 The analysis used to compare morphotype responses to projected climate change can be found in the [analysis](analysis) folder
 
+
+### SDM course
+The folder SDM_course contains the scripts from the course [Species Distribution Models with GIS & Machine Learning in R](https://www.udemy.com/course/species-distribution-models-with-gis-machine-learning-in-r/learn/lecture/7375616#overview) which I used to learn the basics before starting this project
+
